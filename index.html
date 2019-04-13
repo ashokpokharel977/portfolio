@@ -1,12 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ashok Pokharel</title>
-</head>
-<body>
     
+    <link rel="stylesheet" href="sass/main.css">
+</head>
+
+<body>
+    <div class="wrapper" id="wrapper">
+    <aside class="sidebar" id="sidebar">
+            <div class="sidebar__wrapper">
+                <div class="logo__box">
+                    <img src="img/logo.png" alt="Ashok Pokharel Logo" class="logo__img">
+                </div>
+                <div class="search">
+                    <input type="search" name="search" id="" placeholder="Search Blog" class="search__input">
+                </div>
+                <nav class="navigation">
+                    <ul class="navigation__list">
+                        <li class="navigation__items"><a href="#" class="navigation__links">Home</a></li>
+                        <li class="navigation__items"><a href="#" class="navigation__links">About</a></li>
+                        <li class="navigation__items"><a href="#" class="navigation__links">Work</a></li>
+                        <li class="navigation__items"><a href="#" class="navigation__links">Blog</a></li>
+                        <li class="navigation__items"><a href="#" class="navigation__links">Contact</a></li>
+                    </ul>
+                </nav>
+                <img src="img/shape_buttom.png" alt="AbstractShape" class="navigation__img" srcset="">
+            </div>
+            <div class="hamburger" id="ham">
+                <a href="#" onclick="toggle()" class="hamburger__toggler" value="true">&#8801;</a>
+            </div>
+    </aside>
+   
+    <div class="container ">
+        <section class="welcome row">
+            <main class="main column ">
+                <h6 class="heading__secondary">Hi,</h6>
+                <h1 class="heading__primary">I am <span class="heading__span">Ashok Pokharel</span><span
+                        class=" heading__secondary heading__secondary--title">Web Designer and Develpoer from Nepal</span>
+                </h1>
+                <h2 class="heading__tertiory">If want to build something amazing together,
+                    well you landed in right place.</h2>
+                <button class="btn btn--outline">Hire Me</button>
+            </main>
+            <aside class="aside column ">
+                <div class="banner__box">
+                    <img src="img/manthinking.png" alt="" class="banner__img">
+                </div>
+            </aside>
+        </section>
+        <section class="row about">
+            <h2 class="section__title">About</h2>
+            <div class="row about__content">
+                <div class="column about__info">
+                    I am Ashok Pokharel and I am 24 years old. I studied Electronics and communication Engineering from Himalaya College of
+                    Engineering.
+                    
+                    Though I have studied Electronics Engineering I got into Web development in one of my project from then onwards I fell
+                    in love with Web Development.
+                    
+                    I mostly work on Backend technology. So, for I have learnt PHP, Laravel, databases. I am enhancing my career path
+                    learning new JAVASCRIPT frameworks and I have started to learn VUE JS.
+                    
+                    I want to learn new things daily and expand my skill set.
+                </div>
+                <div class="column about__imgbox">
+                    <img src="/img/ashokleftface.png" alt="Ashok Photo" srcset="" class="about__img">
+                </div>
+            </div>
+        </section>
+        <section class="project">
+            <div class="row project__wrapper ">
+                <h2 class="section__title">Projects</h2>
+                <ul class="category">
+                    <li class="category__items"><button class="category__links">All Projects</button></li>
+                    <li class="category__items"><button class="category__links ">Designs</button></li>
+                    <li class="category__items"><button class="category__links">Backend</button></li>
+            </ul>
+                <div class="row project__cards ">
+                    <div class="project__content prev">
+                        <img src="/img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project__content selected">
+                        <img src="/img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project__content next">
+                        <img src="/img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- end of project sec wrapper -->
+        </section>
+        <section class="blog">
+            <h2 class="blog__heading">Blog</h2>
+            <div class="blog__wrapper">
+                <div class="blog__cards">
+                    <main class="blog__single">
+                        <img src="/img/simpleblogimg.jpg" alt="" class="blog__img">
+                        <h3 class="blog__category">Laravel <span class="blog__date">2020/13/12</span></h3>
+                        <h1 class="blog__title">First blog On laravel</h1>
+                        <div class="blog__excert">
+                            This article focuses on finding common grounds for using Domain-Driven Design in the Laravel framework in a way that
+                            leverages a maximum of Laravel features.
+                        </div>
+                    </main>
+                </div>
+                <div class="blog__trending">
+                    <div class="trending__heading">
+                    <h2>Trending</h2>
+                    <h2>&#128202;</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div><!-- end of wrapper -->
+
+<script src="js/main.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,49 @@
+.wrapper {
+	display: flex;
+}
+.container {
+	//padding: 3rem 3rem;
+	margin-left: 25rem;
+	position: relative;
+	top: 0;
+	display: flex;
+	justify-content: start;
+	&--inactive {
+		margin-left: -25rem;
+	}
+}
+.welcome {
+	display: flex;
+	margin-top: 5rem;
+	justify-content: space-between;
+	flex-basis: 100%;
+	padding-right: 2rem;
+}
+.sidebar {
+	background-color: $color-bright-2;
+	padding: 3rem 3rem;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 25rem;
+	height: 100%;
+}
+.hamburger {
+	align-self: flex-start;
+	margin-left: 2rem;
+}
+.main {
+	margin-top: 5rem;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+}
+.column {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+}

@@ -1,0 +1,348 @@
+.hamburger {
+	display: inline-block;
+	&__toggler {
+		display: inline-block;
+		font-size: 5rem;
+		font-weight: 700;
+		color: $color-primary;
+		text-decoration: none;
+	}
+}
+.sidebar__wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	padding: 2rem 3rem;
+	box-shadow: 28px 13px 82px -30px rgba(135, 128, 135, 0.5);
+	//transition: margin-left 0.5s ease, box-shadow 0.5s ease;
+}
+.navigation {
+	flex-grow: 1;
+	flex-shrink: 1;
+	&__list {
+		list-style-type: none;
+	}
+	&__items {
+		padding: 2rem;
+	}
+	&__links {
+		text-decoration: none;
+		color: $color-black;
+		font-size: 2.5rem;
+		font-weight: 700;
+		font-family: Lato;
+		text-decoration: none;
+		position: relative;
+		&:hover,
+		&:active {
+			&::before {
+				content: "";
+				position: absolute;
+				background: $color-primary;
+				top: 1.3rem;
+				left: -6rem;
+				width: 5rem;
+				height: 0.5rem;
+				animation: moveInLeft .5s;
+			}
+		}
+	}
+	&__img {
+		width: 25rem;
+		height: auto;
+		justify-self: flex-end;
+		margin-left: -10rem;
+		transform: translateY(8rem);
+		overflow: hidden;
+	}
+}
+.heading {
+	&__secondary {
+		font-size: 3rem;
+		font-family: Roboto;
+		font-weight: 400;
+		color: $color-grey-light-1;
+		margin-top: 3rem;
+	}
+	&__primary {
+		font-size: 4rem;
+		font-family: Roboto;
+		font-weight: 400;
+		color: $color-grey-light-1;
+		margin-top: 3rem;
+	}
+	&__span {
+		background-color: $color-primary;
+		padding: .8rem;
+		border-radius: 1rem 0rem 1rem 0rem;
+		color: $color-black;
+	}
+	&__secondary {
+		&--title {
+			display: block;
+			margin-top: 3rem;
+		}
+	}
+	&__tertiory {
+		font-size: 2rem;
+		color: $color-bright-1;
+		font-weight: 400;
+		margin-top: 3rem;
+		margin-bottom: 4rem;
+	}
+}
+.btn {
+	width: 20rem;
+	border: 3px solid black;
+	background-color: white;
+	color: black;
+	padding: 1rem 3rem;
+	font-size: 2rem;
+	cursor: pointer;
+	&--outline {
+		border-color: $color-secondary;
+		font-weight: 700;
+	}
+}
+.banner {
+	&__box {
+		overflow: hidden;
+		align-self: center;
+	}
+	&__img {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+.search {
+	transform: translateX(5%);
+	&__input {
+		font-family: inherit;
+		font-size: inherit;
+		color: inherit;
+		background-color: $color-bright-2;
+		border: 2px solid $color-bright-1;
+		padding: .8rem 2rem;
+		border-radius: 100px;
+		width: 90%;
+		transition: all .2s;
+		box-shadow: 1px 1px 10px $color-bright-1;
+		//margin-right: -3.25rem;
+
+		&:focus {
+			transform: translateX(-5%);
+			outline: none;
+			width: 100%;
+			background-color: $color-bright-2;
+			border: 2px solid $color-grey-light-1;
+		}
+
+		&::-webkit-input-placeholder {
+			font-weight: 400;
+			font-size: 1.5rem;
+			text-align: center;
+			color: $color-bright-1;
+		}
+	}
+}
+///////////////////////
+// About Section
+/////////////////////////
+.about {
+	.section__title {
+		font-family: Lato;
+		font-weight: 700;
+		font-size: 5rem;
+		border-bottom: .5rem solid $color-primary;
+		justify-self: flex-start;
+	}
+	&__info {
+		margin-top: 5rem;
+		font-family: Roboto;
+		font-size: 2rem;
+		font-weight: 400;
+		line-height: 2.2;
+	}
+	&__imgbox {
+	}
+	&__img {
+		max-width: 100%;
+	}
+}
+///////////////////////
+// Projects Section
+/////////////////////////
+
+.project {
+	&__wrapper {
+		flex-basis: 100%;
+	}
+	.section__title {
+		font-family: Lato;
+		font-weight: 700;
+		font-size: 5rem;
+		border-bottom: .5rem solid $color-primary;
+		justify-self: flex-start;
+	}
+	.category {
+		display: flex;
+		margin-left: 10rem;
+
+		list-style-type: none;
+		&__items {
+			padding: 2rem;
+		}
+		&__links {
+			padding: 1rem 2rem;
+			background: white;
+			border: 5px solid $color-secondary;
+			border-radius: 500px;
+			font-family: inherit;
+			font-size: 1.8rem;
+			transition-duration: 0.4s;
+			&:hover {
+				background: $color-secondary;
+				color: white;
+			}
+		}
+	}
+	&__cards {
+		margin-top: 10rem;
+	}
+	&__content {
+		width: 50rem;
+		height: 30rem;
+		margin: 0 auto;
+		//border: 5px solid $color-secondary;
+		box-shadow: 19px 46px 32px 31px rgba(231, 221, 231, 0.6);
+		transform: skewX(-10deg);
+		//position: relative;
+		.overlay__buttom {
+			position: absolute;
+			bottom: 0;
+			z-index: 100;
+			background: rgb(0, 0, 0);
+			background: rgba(0, 0, 0, 0.5); /* Black see-through */
+			color: #f1f1f1;
+			width: 100%;
+			transition: .5s ease;
+			opacity: 0;
+			color: white;
+			font-size: 20px;
+			padding: 20px;
+			text-align: left;
+			& > a {
+				transform: skewX(0deg);
+			}
+		}
+		&:hover .overlay__buttom {
+			opacity: 1;
+		}
+		.overlay__left {
+			position: absolute;
+			bottom: 0;
+			left: 60%;
+			right: 0;
+			background-color: $color-primary;
+			box-shadow: -15px -1px 23px -5px rgba(128, 124, 128, 1);
+			overflow: hidden;
+			width: 40%;
+			height: 100%;
+			transition: .5s ease;
+			transform: scale(1);
+			z-index: 1000;
+			& * {
+				transform: skewX(0deg);
+			}
+		}
+		.projectdesc {
+			display: flex;
+			height: 100%;
+			flex-direction: column;
+			align-items: center;
+			justify-content: start;
+			margin-top: 10rem;
+			&__title {
+				font-family: Lato;
+				font-weight: 700;
+				font-size: 3rem;
+				color: $color-secondary;
+				//border-bottom: 2px solid $color-bright-2;
+			}
+			&__body {
+				font-family: Roboto;
+				font-weight: 400;
+				font-size: 1.5rem;
+				color: $color-grey-light-2;
+				margin-top: 5rem;
+				text-align: center;
+			}
+		}
+
+		&:hover .overlay__left {
+			transform: scale(1.02);
+		}
+		.code__btn {
+			margin-left: 3rem;
+			text-decoration: none;
+			color: white;
+			display: inline-block;
+			padding: .5rem 1rem;
+			border: 3px solid $color-primary;
+		}
+	}
+	&__img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+}
+
+//Blog Section
+.blog {
+	&__wrapper {
+	}
+	&__heading {
+		font-family: Lato;
+		font-weight: 700;
+		font-size: 5rem;
+		border-bottom: .5rem solid $color-primary;
+		flex-basis: content;
+		align-self: flex-start;
+	}
+	&__single {
+		padding: 1rem;
+		box-shadow: 0 1px 5px #dcdcdc;
+	}
+	&__img {
+		width: 100%;
+	}
+	&__category {
+		text-transform: uppercase;
+		font-size: 1.5rem;
+		color: $color-primary;
+	}
+	&__date {
+		color: $color-bright-1;
+	}
+	&__title {
+		font-family: Roboto;
+		font-weight: 700;
+		font-size: 5rem;
+		color: $color-secondary;
+	}
+	&__excert {
+		font-size: 2rem;
+		color: $color-grey-light-2;
+	}
+	&__trending {
+		background-color: $color-grey-light-1;
+	}
+	.trending__heading {
+		padding: .5rem;
+		display: flex;
+		justify-content: space-between;
+	}
+}
