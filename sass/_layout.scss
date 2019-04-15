@@ -32,12 +32,28 @@
 	position: relative;
 	margin-top: 10rem;
 	margin-left: 4rem;
-	flex-grow: 1;
-	flex-shrink: 1;
+	flex: 1 1 100%;
+	overflow: hidden;
 }
 .welcome {
-	flex-grow: 1;
-	flex-shrink: 1;
+	flex: 1 1 100%;
+	@media (max-width: 1050px) {
+		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+.main {
+	flex: 1 1 50%;
+	@media (max-width: 1050px) {
+		flex: 1 1 100%;
+	}
+}
+.aside {
+	flex: 1 1 50%;
+	@media (max-width: 1050px) {
+		flex: 1 1 100%;
+	}
 }
 .row {
 	display: flex;
@@ -51,27 +67,38 @@
 	flex-basis: 100%;
 	flex: 1;
 }
+.project__wrapper {
+	flex: 1 1 100%;
+	flex-wrap: wrap;
+	.category {
+		justify-self: flex-start;
+	}
+}
 .project__cards {
 	display: flex;
-	position: relative;
-	//flex-wrap: nowrap;
 	justify-content: center;
-	overflow: hidden;
+	flex: 1 1 100%;
 	.prev {
 		z-index: 50000;
-		left: 10%;
-		transform: translateY(.5rem) translateX(13%) scale(0.8);
+		flex: 0 1 25%;
+		@media (max-width: 650px) {
+			flex: 0 1 100%;
+		}
 		opacity: 0.6;
 	}
 	.selected {
 		z-index: 1000000;
-		left: 40%;
-		transform: translateY(0px) translateX(0%);
+		flex: 0 1 40%;
+		@media (max-width: 650px) {
+			flex: 0 1 100%;
+		}
 	}
 	.next {
 		z-index: 50000;
-		left: 70%;
-		transform: translateY(.5rem) translateX(-13%) scale(0.8);
+		flex: 0 1 25%;
+		@media (max-width: 650px) {
+			flex: 0 1 100%;
+		}
 		opacity: 0.6;
 	}
 }
@@ -81,11 +108,43 @@
 	flex-direction: column;
 	&__wrapper {
 		display: flex;
+		flex-wrap: wrap;
 	}
 	&__cards {
-		flex: 2 0 50%;
+		flex: 2 1 50%;
+		@media (max-width: 960px) {
+			flex: 1 1 100%;
+		}
 	}
 	&__trending {
-		flex: 1 0 auto;
+		flex: 1 0 25%;
+		align-self: flex-start;
+		@media (max-width: 960px) {
+			flex: 1 0 100%;
+		}
+	}
+}
+//Contact Section
+.contact {
+	display: flex;
+	flex-grow: 1 1 100%;
+	margin-top: 3rem;
+
+	background-image: linear-gradient(to right, #ffb75e94, #ed8f036b), url('/img/kathmandumap.PNG');
+	&__wrapper {
+		flex: 1 1 50%;
+		display: flex;
+		justify-content: space-around;
+		@media (max-width: 700px) {
+			flex-wrap: wrap;
+			flex-direction: column;
+			flex: 1 1 100%;
+		}
+	}
+	&__medium {
+		@media (max-width: 700px) {
+			padding: 5rem 0;
+			flex: 1 0 50rem;
+		}
 	}
 }

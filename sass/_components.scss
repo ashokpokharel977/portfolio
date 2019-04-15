@@ -15,11 +15,13 @@
 	align-items: center;
 	padding: 2rem 3rem;
 	box-shadow: 28px 13px 82px -30px rgba(135, 128, 135, 0.5);
+	//justify-content: space-between;
 	//transition: margin-left 0.5s ease, box-shadow 0.5s ease;
 }
 .navigation {
 	flex-grow: 1;
-	flex-shrink: 1;
+	flex-shrink: 0;
+
 	&__list {
 		list-style-type: none;
 	}
@@ -29,7 +31,7 @@
 	&__links {
 		text-decoration: none;
 		color: $color-black;
-		font-size: 2.5rem;
+		font-size: 2.2rem;
 		font-weight: 700;
 		font-family: Lato;
 		text-decoration: none;
@@ -48,14 +50,17 @@
 			}
 		}
 	}
-	&__img {
-		width: 25rem;
-		height: auto;
-		justify-self: flex-end;
-		margin-left: -10rem;
-		transform: translateY(8rem);
-		overflow: hidden;
-	}
+}
+.navfooter__social > a {
+	display: inline-block;
+	padding: 1rem;
+	font-size: 2rem;
+	color: $color-secondary;
+}
+.cp {
+	font-size: 1.3rem;
+	color: $color-grey-light-2;
+	text-align: center;
 }
 .heading {
 	&__secondary {
@@ -105,19 +110,22 @@
 		font-weight: 700;
 	}
 }
+.aside {
+	@media (max-width: 700px) {
+		flex: 0 0 100%;
+	}
+}
 .banner {
 	&__box {
-		overflow: hidden;
-		align-self: center;
 	}
 	&__img {
 		max-width: 100%;
-		height: auto;
 	}
 }
 
 .search {
 	transform: translateX(5%);
+	margin-top: 5rem;
 	&__input {
 		font-family: inherit;
 		font-size: inherit;
@@ -142,7 +150,7 @@
 		&::-webkit-input-placeholder {
 			font-weight: 400;
 			font-size: 1.5rem;
-			text-align: center;
+			text-align: start;
 			color: $color-bright-1;
 		}
 	}
@@ -166,6 +174,9 @@
 		line-height: 2.2;
 	}
 	&__imgbox {
+		@media (max-width: 700px) {
+			flex: 1 0 100%;
+		}
 	}
 	&__img {
 		max-width: 100%;
@@ -189,6 +200,10 @@
 	.category {
 		display: flex;
 		margin-left: 10rem;
+		@media (max-width: 650px) {
+			margin-left: 0px;
+			align-self: center;
+		}
 
 		list-style-type: none;
 		&__items {
@@ -196,6 +211,7 @@
 		}
 		&__links {
 			padding: 1rem 2rem;
+			min-width: 15rem;
 			background: white;
 			border: 5px solid $color-secondary;
 			border-radius: 500px;
@@ -210,10 +226,12 @@
 	}
 	&__cards {
 		margin-top: 10rem;
+		flex: 1 1 100%;
+		justify-content: center;
 	}
 	&__content {
-		width: 50rem;
-		height: 30rem;
+		width: 100%;
+		//height: 30rem;
 		margin: 0 auto;
 		//border: 5px solid $color-secondary;
 		box-shadow: 19px 46px 32px 31px rgba(231, 221, 231, 0.6);
@@ -226,7 +244,8 @@
 			background: rgb(0, 0, 0);
 			background: rgba(0, 0, 0, 0.5); /* Black see-through */
 			color: #f1f1f1;
-			width: 100%;
+			width: 70%;
+			height: auto;
 			transition: .5s ease;
 			opacity: 0;
 			color: white;
@@ -263,7 +282,8 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: start;
-			margin-top: 10rem;
+			align-content: center;
+
 			&__title {
 				font-family: Lato;
 				font-weight: 700;
@@ -295,8 +315,24 @@
 	}
 	&__img {
 		display: block;
-		width: 100%;
+		max-width: 100%;
 		height: auto;
+	}
+	&__nav {
+		font-size: 5rem;
+		color: $color-primary;
+		justify-self: center;
+
+		transform: translate(50%, 50%);
+		&__link {
+			text-align: center;
+			display: inline-block;
+			text-decoration: none;
+			color: $color-primary;
+			&--sep {
+				font-size: 3rem;
+			}
+		}
 	}
 }
 
@@ -313,6 +349,7 @@
 		align-self: flex-start;
 	}
 	&__single {
+		margin-top: 2rem;
 		padding: 1rem;
 		box-shadow: 0 1px 5px #dcdcdc;
 	}
@@ -339,10 +376,150 @@
 	}
 	&__trending {
 		background-color: $color-grey-light-1;
+		padding: 1rem;
 	}
 	.trending__heading {
+		background-color: #ddd;
+		border-bottom: 1px solid #4e4848;
 		padding: .5rem;
 		display: flex;
 		justify-content: space-between;
+		& > h2 {
+			color: $color-black;
+			font-size: 2rem;
+		}
+	}
+	.trending {
+		&__content {
+		}
+		&__elements {
+			list-style-type: none;
+		}
+		&__list {
+			padding: 1rem 0;
+			font-size: 1.5rem;
+			color: $color-bright-1;
+			border-bottom: 1px solid $color-bright-1;
+		}
+		&__links {
+			display: block;
+			text-decoration: none;
+			font-size: 2rem;
+			color: $color-bright-2;
+		}
+	}
+	.btn--more {
+		display: flex;
+		justify-content: center;
+		margin: 1rem auto;
+		text-align: center;
+		border: 3px solid $color-secondary;
+		font-weight: 700;
+		font-size: 2rem;
+	}
+}
+//Contact Section
+.contact {
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: $color-grey-light-1;
+	&__wrapper {
+		//background-color: white;
+		margin: 5rem;
+	}
+	&__heading {
+		font-size: 3rem;
+		font-weight: 700;
+	}
+	&__medium {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
+		text-align: center;
+		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+		flex-grow: 1;
+		background-color: $color-grey-light-1;
+		color: white;
+		padding: .5rem;
+		& > div {
+			border-bottom: 2px solid $color-bright-1;
+			&:last-child {
+				border: 0;
+			}
+		}
+	}
+	i {
+		color: $color-primary;
+	}
+	&__social {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__links {
+		text-decoration: none;
+		display: block;
+		padding: .5rem 2rem;
+	}
+	&__fromgroup {
+		text-align: center;
+	}
+
+	&__form {
+		//Form Input Elements
+		.container {
+			background-color: white;
+			border-radius: 2rem;
+			padding: 1rem 3rem;
+			flex-grow: 1 1 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			//border: 5px solid red;
+		}
+
+		input[type=text],
+		input[type=email],
+		select,
+		textarea {
+			background-color: $color-bright-2;
+			width: 100%; /* Full width */
+			padding: 12px; /* Some padding */
+			border: 1px solid $color-grey-light-1; /* Gray border */
+			border-radius: 2rem; /* Rounded borders */
+			box-sizing: border-box; /* Make sure that padding and width stays in place */
+			margin-top: 6px; /* Add a top margin */
+			margin-bottom: 16px; /* Bottom margin */
+			resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+			font-size: 1.6rem;
+			color: $color-grey-light-1;
+			font-weight: 700;
+		}
+	}
+}
+.btn--submit {
+	display: inline-block;
+	padding: 1rem 2rem;
+	background: white;
+	border: 5px solid $color-secondary;
+	border-radius: 500px;
+	font-family: inherit;
+	font-size: 2rem;
+	transition-duration: 0.4s;
+	color: black;
+	text-align: center;
+	&:hover {
+		background: $color-secondary;
+		color: white;
+		& i {
+			color: white;
+		}
+	}
+	& i {
+		margin-left: 1rem;
+		color: $color-black;
+		&:hover {
+			color: white;
+		}
 	}
 }
