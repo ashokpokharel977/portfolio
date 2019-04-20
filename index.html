@@ -10,6 +10,7 @@
     crossorigin="anonymous">
 
     <link rel="stylesheet" href="sass/main.css">
+    <link rel="stylesheet" href="vendor/swiper/css/swiper.min.css">
 </head>
 
 <body>
@@ -60,7 +61,7 @@
                 </div>
             </aside>
         </section>
-        <section class="row about" id="about">
+        <section class="row about fadeInUp" id="about">
             <h2 class="section__title">About</h2>
             <div class="row about__content">
                 <div class="column about__info">
@@ -88,7 +89,46 @@
                     <li class="category__items"><button class="category__links ">Designs</button></li>
                     <li class="category__items"><button class="category__links">Backend</button></li>
             </ul>
-                <div class="row project__cards ">
+                <div class="row project__cards " id="cards">
+                    <div class="project__content prev">
+                        <img src="img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project__content prev">
+                        <img src="img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project__content active">
+                        <img src="img/projectstructure.PNG" alt="" srcset="" class="project__img">
+                        <div class="overlay__buttom">
+                            <a href="" class="code__btn">Preview</a>
+                            <a href="" class="code__btn">Code</a>
+                        </div>
+                        <div class="overlay__left">
+                            <div class="projectdesc">
+                                <h1 class="projectdesc__title">Orange Brand</h1>
+                                <p class="projectdesc__body">Contains the description of the project</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project__content prev">
                         <img src="img/projectstructure.PNG" alt="" srcset="" class="project__img">
                         <div class="overlay__buttom">
@@ -129,6 +169,8 @@
                         </div>
                     </div>
                 </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
             </div><!-- end of project sec wrapper -->
             <div class="project__nav">
                 <a href="" class="project__nav__link"><i class="fas fa-caret-left"></i></a>
@@ -208,7 +250,9 @@
         </section>
     </div>
 </div><!-- end of wrapper -->
-
+<script src="https://code.jquery.com/jquery-3.2.0.min.js"
+    integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I=" crossorigin="anonymous"></script>
+<script src="vendor/swiper/js/swiper.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 

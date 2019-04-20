@@ -74,32 +74,20 @@
 		justify-self: flex-start;
 	}
 }
+.project__content {
+	position: relative;
+	width: 33.33%;
+	flex: 0 0 auto;
+}
 .project__cards {
 	display: flex;
 	justify-content: center;
-	flex: 1 1 100%;
-	.prev {
-		z-index: 50000;
-		flex: 0 1 25%;
-		@media (max-width: 650px) {
-			flex: 0 1 100%;
-		}
-		opacity: 0.6;
-	}
-	.selected {
-		z-index: 1000000;
-		flex: 0 1 40%;
-		@media (max-width: 650px) {
-			flex: 0 1 100%;
-		}
-	}
-	.next {
-		z-index: 50000;
-		flex: 0 1 25%;
-		@media (max-width: 650px) {
-			flex: 0 1 100%;
-		}
-		opacity: 0.6;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	//flex: 0 0 auto;
+	-webkit-overflow-scrolling: touch;
+	&::-webkit-scrollbar {
+		display: none;
 	}
 }
 //Blog Section
@@ -130,7 +118,7 @@
 	flex-grow: 1 1 100%;
 	margin-top: 3rem;
 
-	background-image: linear-gradient(to right, #ffb75e94, #ed8f036b), url('/img/kathmandumap.PNG');
+	background-image: linear-gradient(to right, #ffb75e94, #ed8f036b), url('../img/kathmandumap.PNG');
 	&__wrapper {
 		flex: 1 1 50%;
 		display: flex;
