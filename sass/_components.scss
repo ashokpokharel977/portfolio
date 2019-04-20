@@ -236,6 +236,10 @@
 		position: relative;
 		top: 0;
 		left: -5rem;
+		@media (max-width: 480px) {
+			width: 80%;
+			left: -10rem;
+		}
 
 		.overlay__buttom {
 			position: absolute;
@@ -255,6 +259,9 @@
 			text-align: left;
 			& > a {
 				transform: skewX(0deg);
+			}
+			@media (max-width: 480px) {
+				width: 70%;
 			}
 		}
 		&:hover .overlay__buttom {
