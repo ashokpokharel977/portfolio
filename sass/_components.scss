@@ -224,27 +224,28 @@
 			}
 		}
 	}
-	&__cards {
-		margin-top: 10rem;
-		//flex: 1 1 100%;
-		justify-content: center;
-	}
+
 	&__content {
-		width: 300px;
-		height: 300px;
+		//width: 50rem;
+		width: 65%;
+		height: 100%;
 		margin: 0 auto;
 		//border: 5px solid $color-secondary;
-		box-shadow: 19px 46px 32px 31px rgba(231, 221, 231, 0.6);
+		//box-shadow: 19px 46px 32px 31px rgba(231, 221, 231, 0.6);
 		transform: skewX(-10deg);
-		//position: relative;
+		position: relative;
+		top: 0;
+		left: -5rem;
+
 		.overlay__buttom {
 			position: absolute;
 			bottom: 0;
-			z-index: 100;
+			left: 0;
+			z-index: 10000;
 			background: rgb(0, 0, 0);
 			background: rgba(0, 0, 0, 0.5); /* Black see-through */
 			color: #f1f1f1;
-			width: 70%;
+			width: 100%;
 			height: auto;
 			transition: .5s ease;
 			opacity: 0;
@@ -262,7 +263,7 @@
 		.overlay__left {
 			position: absolute;
 			bottom: 0;
-			left: 60%;
+			left: 90%;
 			right: 0;
 			background-color: $color-primary;
 			box-shadow: -15px -1px 23px -5px rgba(128, 124, 128, 1);
@@ -285,11 +286,13 @@
 			align-content: center;
 
 			&__title {
+				margin-top: 2rem;
 				font-family: Lato;
 				font-weight: 700;
 				font-size: 3rem;
 				color: $color-secondary;
 				//border-bottom: 2px solid $color-bright-2;
+				text-align: center;
 			}
 			&__body {
 				font-family: Roboto;
@@ -311,26 +314,9 @@
 			display: inline-block;
 			padding: .5rem 1rem;
 			border: 3px solid $color-primary;
-		}
-	}
-	&__img {
-		display: block;
-		max-width: 100%;
-		height: auto;
-	}
-	&__nav {
-		font-size: 5rem;
-		color: $color-primary;
-		justify-self: center;
-
-		transform: translate(50%, 50%);
-		&__link {
-			text-align: center;
-			display: inline-block;
-			text-decoration: none;
-			color: $color-primary;
-			&--sep {
-				font-size: 3rem;
+			@media (max-width: 480px) {
+				margin-left: 3rem;
+				padding: .2rem .5rem;
 			}
 		}
 	}

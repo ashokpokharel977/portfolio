@@ -4,23 +4,14 @@ function toggle () {
 	element.lastElementChild.classList.toggle('hamburger--sticky');
 	console.log(element.lastElementChild);
 }
-function replaceVerticalScrollByHorizontal (event) {
-	if (event.deltaY != 0) {
-		// manually scroll horizonally instead
-		window.scroll(window.scrollX + event.deltaY * 5, window.scrollY);
 
-		// prevent vertical scroll
-		event.preventDefault();
-	}
-	return;
-}
-// document.getElementById('cards').addEventListener('wheel', replaceVerticalScrollByHorizontal, { passive: false });
-
-var swiper = new Swiper('.project__cards', {
+var swiper = new Swiper('.swiper-container', {
 	effect: 'coverflow',
 	grabCursor: true,
 	centeredSlides: true,
 	slidesPerView: 'auto',
+	initialSlide: 1,
+	mousewheel: true,
 	coverflowEffect: {
 		rotate: 50,
 		stretch: 0,
@@ -30,5 +21,18 @@ var swiper = new Swiper('.project__cards', {
 	},
 	pagination: {
 		el: '.swiper-pagination'
+	},
+	breakpoints: {
+		// when window width is <= 480px
+		480: {
+			direction: 'vertical',
+			slidesPerView: 1,
+			spaceBetween: 30,
+			mousewheel: true,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true
+			}
+		}
 	}
 });
