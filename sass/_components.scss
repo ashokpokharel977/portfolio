@@ -260,8 +260,9 @@
 			& > a {
 				transform: skewX(0deg);
 			}
-			@media (max-width: 480px) {
-				width: 70%;
+			@media (max-width: 500px) {
+				width: 100%;
+				left: 16%;
 			}
 		}
 		&:hover .overlay__buttom {

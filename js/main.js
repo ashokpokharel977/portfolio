@@ -36,3 +36,25 @@ var swiper = new Swiper('.swiper-container', {
 		}
 	}
 });
+
+// Get the current breakpoint
+var getBreakpoint = function () {
+	return window.getComputedStyle(document.body, ':before').content.replace(/\"/g, '');
+};
+
+// Get the current breakpoint
+var getBreakpoint = function () {
+	return window.getComputedStyle(document.body, ':before').content.replace(/\"/g, '');
+};
+
+// Recalculate breakpoint on resize
+window.addEventListener(
+	'resize',
+	function () {
+		var breakpoint = getBreakpoint();
+		if (breakpoint === 'phone') {
+			toggle();
+		}
+	},
+	false
+);

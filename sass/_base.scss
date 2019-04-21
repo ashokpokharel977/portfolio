@@ -49,6 +49,17 @@ html {
 		font-size: 40%;
 	}
 }
+body:before {
+	content: "xsmall";
+	display: none;
+	visibility: hidden;
+}
+
+@media (max-width: 500px) {
+	body:before {
+		content: "phone";
+	}
+}
 
 body {
 	font-family: "Roboto", sans-serif;

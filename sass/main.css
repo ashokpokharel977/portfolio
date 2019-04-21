@@ -52,6 +52,18 @@ html {
   }
 }
 
+body:before {
+  content: "xsmall";
+  display: none;
+  visibility: hidden;
+}
+
+@media (max-width: 500px) {
+  body:before {
+    content: "phone";
+  }
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -88,7 +100,7 @@ input[type=search] {
 
 .sidebar--inactive {
   position: relative;
-  margin-left: -20rem;
+  margin-left: -25rem;
   margin-right: 5rem;
 }
 
@@ -624,6 +636,13 @@ input[type=search] {
   left: -5rem;
 }
 
+@media (max-width: 480px) {
+  .project__content {
+    width: 80%;
+    left: -10rem;
+  }
+}
+
 .project__content .overlay__buttom {
   position: absolute;
   bottom: 0;
@@ -647,6 +666,13 @@ input[type=search] {
 .project__content .overlay__buttom > a {
   -webkit-transform: skewX(0deg);
           transform: skewX(0deg);
+}
+
+@media (max-width: 500px) {
+  .project__content .overlay__buttom {
+    width: 100%;
+    left: 16%;
+  }
 }
 
 .project__content:hover .overlay__buttom {
