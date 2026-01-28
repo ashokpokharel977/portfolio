@@ -1,0 +1,313 @@
+---
+const certifications = [
+  {
+    name: "AWS Certified DevOps Engineer – Professional",
+    provider: "Amazon Web Services",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+    color: "#FF9900",
+  },
+  {
+    name: "AWS Certified Developer – Associate",
+    provider: "Amazon Web Services",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+    color: "#FF9900",
+  },
+  {
+    name: "Google Cloud Professional Cloud Architect",
+    provider: "Google Cloud",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+    color: "#4285F4",
+  },
+];
+
+const speaking = [
+  {
+    title: "AWS Cloud Workshop",
+    event: "2-Day Jumpstart to Cloud",
+    description: "Trained 50+ students on AWS fundamentals and cloud architecture",
+    type: "Workshop",
+  },
+  {
+    title: "DevOps Training Program",
+    event: "DeerHold Technologies",
+    description: "Hands-on DevOps training for 15 professionals covering CI/CD, containers, and IaC",
+    type: "Training",
+  },
+  {
+    title: "Infrastructure from a Security Lens",
+    event: "DevOps Meetup",
+    description: "Speaker session on security-first infrastructure design and implementation",
+    type: "Meetup",
+  },
+  {
+    title: "Are Agents the Future?",
+    event: "One2Watch",
+    description: "Panel discussion on AI agents and the future of automation",
+    type: "Conference",
+  },
+];
+
+const leadership = {
+  teamSize: "20+",
+  highlights: [
+    "Leading cross-functional DevOps teams across multiple client projects",
+    "Mentoring junior engineers and fostering a culture of continuous learning",
+    "Driving technical strategy and architectural decisions for enterprise clients",
+    "Building partnerships with AWS and other cloud providers",
+  ],
+};
+---
+
+<section id="certifications" class="section">
+  <div class="container">
+    <h2 class="section-title">Leadership & Credentials</h2>
+
+    <!-- Certifications -->
+    <div class="certs-grid">
+      {certifications.map((cert, index) => (
+        <div class="cert-card card" style={`--delay: ${index * 0.1}s; --cert-color: ${cert.color}`}>
+          <div class="cert-icon" set:html={cert.icon} />
+          <div class="cert-info">
+            <h3 class="cert-name">{cert.name}</h3>
+            <p class="cert-provider">{cert.provider}</p>
+          </div>
+          <div class="cert-badge">Certified</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Leadership Highlight -->
+    <div class="leadership-section">
+      <div class="leadership-card card">
+        <div class="leadership-header">
+          <div class="leadership-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="leadership-title">Technical Leadership</h3>
+            <p class="leadership-subtitle">Managing <span class="team-size">{leadership.teamSize}</span> engineers</p>
+          </div>
+        </div>
+        <ul class="leadership-highlights">
+          {leadership.highlights.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Speaking & Community -->
+    <h3 class="subsection-title">Speaking & Community</h3>
+    <div class="speaking-grid">
+      {speaking.map((talk, index) => (
+        <div class="speaking-card card" style={`--delay: ${index * 0.1}s`}>
+          <span class="speaking-type">{talk.type}</span>
+          <h4 class="speaking-title">{talk.title}</h4>
+          <p class="speaking-event">{talk.event}</p>
+          <p class="speaking-description">{talk.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .cert-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--cert-color);
+  }
+
+  .cert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--cert-color);
+    flex-shrink: 0;
+  }
+
+  .cert-info {
+    flex: 1;
+  }
+
+  .cert-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .cert-provider {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .cert-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Leadership */
+  .leadership-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .leadership-card {
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    border: 1px solid var(--accent);
+  }
+
+  .leadership-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .leadership-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius-md);
+  }
+
+  .leadership-title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .leadership-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .team-size {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .leadership-highlights {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .leadership-highlights li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .leadership-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  /* Speaking */
+  .subsection-title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-lg);
+    color: var(--text-primary);
+  }
+
+  .speaking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .speaking-card {
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .speaking-type {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .speaking-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .speaking-event {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .speaking-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .cert-card {
+      flex-wrap: wrap;
+    }
+
+    .cert-badge {
+      margin-left: auto;
+    }
+
+    .leadership-header {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

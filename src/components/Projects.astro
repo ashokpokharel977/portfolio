@@ -1,0 +1,224 @@
+---
+const projects = [
+  {
+    title: "FinTech Cloud Migration",
+    role: "DevOps Consultant",
+    description: "Migrated legacy infrastructure to a scalable cloud environment. Accelerated deployments through DevOps practices and reduced system complexity using serverless technologies.",
+    highlights: [
+      "Reduced deployment time by 60%",
+      "Implemented serverless architecture",
+      "Automated CI/CD pipelines",
+    ],
+    tags: ["AWS", "Serverless", "Terraform", "CI/CD"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
+  },
+  {
+    title: "Digital Wallet Platform",
+    role: "Solution Architect Consultant",
+    description: "Designed and developed overall system architecture combining multiple cloud vendors for a digital wallet solution with high availability and fault tolerance.",
+    highlights: [
+      "Multi-cloud architecture design",
+      "Automated Flutter app distribution to iOS/PlayStore",
+      "Managed microservices in ECS clusters",
+    ],
+    tags: ["AWS ECS", "Multi-Cloud", "Flutter", "Microservices"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>`,
+  },
+  {
+    title: "FinOps Platform",
+    role: "DevOps Engineer",
+    description: "Architected a secure solution connecting to multiple payment gateways with VPN connectivity, enforcing multi-layer security protections.",
+    highlights: [
+      "Multi-gateway VPN connectivity",
+      "Automated disaster recovery & rollbacks",
+      "Centralized logging with CloudWatch",
+    ],
+    tags: ["AWS", "VPN", "CloudWatch", "DR"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>`,
+  },
+  {
+    title: "Financial Health Security",
+    role: "Security Consultant",
+    description: "Conducted comprehensive security assessments on deployed applications and infrastructure, including container security and vulnerability remediation.",
+    highlights: [
+      "Python-based AWS security auditing tool",
+      "Container security assessments",
+      "Microservice security best practices",
+    ],
+    tags: ["Security", "Python", "Containers", "AWS"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`,
+  },
+  {
+    title: "Home Loan Workflow Optimization",
+    role: "DevOps Engineer",
+    description: "Improved inquiry workflow system achieving 30% reduction in overall latency through event-driven architecture and database performance optimizations.",
+    highlights: [
+      "30% latency reduction",
+      "Event-driven system architecture",
+      "Database performance tuning",
+    ],
+    tags: ["Event-Driven", "Performance", "DataDog", "Serverless"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+  },
+  {
+    title: "Cloud Security Monitoring",
+    role: "Security Engineer",
+    description: "Prevented 20+ high-severity security vulnerabilities by implementing comprehensive cloud monitoring, IDS, and IPS systems.",
+    highlights: [
+      "20+ vulnerabilities prevented",
+      "IDS/IPS implementation",
+      "Real-time threat detection",
+    ],
+    tags: ["GuardDuty", "WAF", "Security Hub", "CloudTrail"],
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
+  },
+];
+---
+
+<section id="projects" class="section">
+  <div class="container">
+    <h2 class="section-title">Featured Projects</h2>
+
+    <div class="projects-grid">
+      {projects.map((project, index) => (
+        <article class="project-card card" style={`--delay: ${index * 0.1}s`}>
+          <div class="project-header">
+            <span class="project-icon" set:html={project.icon} />
+            <span class="project-role">{project.role}</span>
+          </div>
+
+          <h3 class="project-title">{project.title}</h3>
+          <p class="project-description">{project.description}</p>
+
+          <ul class="project-highlights">
+            {project.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+
+          <div class="project-tags">
+            {project.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="projects-cta">
+      <a href="https://github.com/ashokpokharel977" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        View More on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .project-card {
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    color: var(--accent);
+    transition: all var(--transition-base);
+  }
+
+  .project-card:hover .project-icon {
+    box-shadow: var(--glow-sm);
+    background: var(--accent);
+    color: white;
+  }
+
+  .project-role {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+  }
+
+  .project-title {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .project-description {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+    flex-grow: 1;
+  }
+
+  .project-highlights {
+    list-style: none;
+    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+
+  .project-highlights li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .project-highlights li:last-child {
+    margin-bottom: 0;
+  }
+
+  .project-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: auto;
+  }
+
+  .projects-cta {
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+
+  @media (max-width: 400px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

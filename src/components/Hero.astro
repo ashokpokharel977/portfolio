@@ -1,0 +1,297 @@
+---
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/ashokpokharel977',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`,
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/ashokpokharel977',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`,
+  },
+  {
+    name: 'Email',
+    url: 'mailto:ashokpokharel977@gmail.com',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+  },
+];
+---
+
+<section id="about" class="hero">
+  <div class="container hero-content">
+    <div class="hero-text animate-fade-in">
+      <p class="hero-greeting">Hi, I'm</p>
+      <h1 class="hero-name">Ashok Pokharel</h1>
+      <p class="hero-title">Fractional CTO</p>
+      <p class="hero-subtitle">DevOps | SRE | AI Solutions Architect</p>
+      <p class="hero-description">
+        I build end-to-end technical solutions that drive business growth. With 10+ years leading teams
+        and architecting cloud-native systems, I help organizations transform through AI innovation,
+        secure infrastructure, and agile delivery.
+      </p>
+      <p class="hero-tagline">
+        <code>"Building intelligent solutions that drive business growth"</code>
+      </p>
+
+      <div class="hero-cta">
+        <a href="mailto:ashokpokharel977@gmail.com" class="btn btn-primary">Let's Build Something Great</a>
+        <a href="#solutions" class="btn btn-outline">What I Do</a>
+      </div>
+
+      <div class="hero-social">
+        {socialLinks.map((link) => (
+          <a
+            href={link.url}
+            class="social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.name}
+          >
+            <Fragment set:html={link.icon} />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-visual animate-fade-in">
+      <div class="profile-container">
+        <div class="profile-image-wrapper">
+          <img
+            src="/profile.jpg"
+            alt="Ashok Pokharel"
+            class="profile-image"
+          />
+          <div class="profile-ring"></div>
+        </div>
+        <div class="profile-status">
+          <span class="status-dot"></span>
+          <span class="status-text">Available for work</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .hero-greeting {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-name {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-tagline {
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-tagline code {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-social {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+
+  .social-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-sm);
+  }
+
+  /* Profile Image */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .profile-image-wrapper {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--bg-secondary);
+    box-shadow: 0 20px 40px var(--shadow-lg), var(--glow-sm);
+    transition: all var(--transition-base);
+  }
+
+  .profile-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px var(--shadow-lg), var(--glow-lg);
+  }
+
+  .profile-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0.6;
+    animation: spin 20s linear infinite, ringGlow 3s ease-in-out infinite;
+  }
+
+  .profile-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0.3;
+    animation: ringPulse 2s ease-out infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes ringGlow {
+    0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
+    50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 40px var(--accent-glow); }
+  }
+
+  @keyframes ringPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  .profile-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-text {
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-description {
+      margin: 0 auto var(--space-md);
+    }
+
+    .hero-cta {
+      justify-content: center;
+    }
+
+    .hero-social {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .profile-image-wrapper {
+      width: 220px;
+      height: 220px;
+    }
+  }
+</style>

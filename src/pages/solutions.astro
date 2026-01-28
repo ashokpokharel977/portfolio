@@ -1,0 +1,533 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const solutions = [
+  {
+    id: "ai-genai",
+    title: "AI & GenAI Solutions",
+    tagline: "Build intelligent applications that transform how your business operates",
+    description: "From agentic systems to RAG pipelines, I design and implement AI solutions that deliver measurable business value. Not just chatbots—complete intelligent systems that automate workflows, enhance decision-making, and create competitive advantages.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m9 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path></svg>`,
+    services: [
+      {
+        name: "Agentic Applications",
+        description: "Autonomous AI agents that execute complex workflows, make decisions, and integrate with your existing systems."
+      },
+      {
+        name: "RAG Systems",
+        description: "Retrieval-Augmented Generation pipelines that give AI access to your proprietary knowledge and data."
+      },
+      {
+        name: "LLM Fine-tuning",
+        description: "Custom model training to optimize AI performance for your specific domain and use cases."
+      },
+      {
+        name: "Intelligent Automation",
+        description: "AI-powered process automation that handles complex, unstructured tasks humans used to do."
+      },
+      {
+        name: "Predictive Analytics",
+        description: "Machine learning models that forecast trends, detect anomalies, and inform strategic decisions."
+      }
+    ],
+    outcomes: [
+      "Reduced manual processing time by 80%",
+      "Improved decision accuracy with data-driven insights",
+      "Scaled operations without proportional headcount increase"
+    ]
+  },
+  {
+    id: "cloud-transformation",
+    title: "Cloud Transformation",
+    tagline: "Migrate, modernize, and optimize your infrastructure",
+    description: "Whether you're moving from on-premises, optimizing multi-cloud, or modernizing legacy systems, I bring battle-tested strategies across AWS, Azure, and GCP. Every migration is designed for minimal disruption and maximum business value.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`,
+    services: [
+      {
+        name: "Cloud Migration",
+        description: "End-to-end migration from data centers to cloud with zero downtime and complete data integrity."
+      },
+      {
+        name: "Multi-Cloud Strategy",
+        description: "Architect and implement solutions that leverage the best of AWS, Azure, and GCP."
+      },
+      {
+        name: "Legacy Modernization",
+        description: "Transform monolithic applications into cloud-native microservices without business disruption."
+      },
+      {
+        name: "Cost Optimization",
+        description: "Right-size resources, implement FinOps practices, and reduce cloud spend by 30-50%."
+      },
+      {
+        name: "Disaster Recovery",
+        description: "Design and implement resilient architectures with automated failover and backup strategies."
+      }
+    ],
+    outcomes: [
+      "Reduced infrastructure costs by 40%",
+      "Achieved 99.99% uptime SLAs",
+      "Accelerated deployment frequency by 10x"
+    ]
+  },
+  {
+    id: "devops-platform",
+    title: "DevOps & Platform Engineering",
+    tagline: "Accelerate delivery with robust automation and scalable platforms",
+    description: "From CI/CD pipelines to internal developer platforms, I build the foundations that enable engineering teams to ship faster and more reliably. Platform engineering that removes friction and amplifies developer productivity.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v10"></path><path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24"></path><path d="M1 12h6m6 0h10"></path><path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24"></path></svg>`,
+    services: [
+      {
+        name: "CI/CD Pipelines",
+        description: "Automated build, test, and deployment pipelines that catch issues early and deploy confidently."
+      },
+      {
+        name: "Kubernetes Platforms",
+        description: "Production-grade Kubernetes clusters with GitOps, service mesh, and observability built in."
+      },
+      {
+        name: "Infrastructure as Code",
+        description: "Terraform, Pulumi, and CloudFormation modules that make infrastructure reproducible and auditable."
+      },
+      {
+        name: "Developer Experience",
+        description: "Internal platforms, golden paths, and self-service tooling that let developers focus on building."
+      },
+      {
+        name: "Site Reliability Engineering",
+        description: "SLOs, error budgets, and incident management that balance velocity with reliability."
+      }
+    ],
+    outcomes: [
+      "Reduced deployment time from days to minutes",
+      "Decreased incident response time by 60%",
+      "Improved developer satisfaction and retention"
+    ]
+  },
+  {
+    id: "technical-leadership",
+    title: "Technical Leadership & Advisory",
+    tagline: "Strategic guidance from technology roadmaps to team building",
+    description: "As a Fractional CTO, I provide the technical leadership growing companies need without the full-time executive cost. From strategic planning to hands-on architecture, I help organizations make the right technology decisions.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
+    services: [
+      {
+        name: "Fractional CTO",
+        description: "Part-time technical leadership for startups and growing companies needing executive guidance."
+      },
+      {
+        name: "Technology Strategy",
+        description: "Roadmaps that align technology investments with business objectives and growth plans."
+      },
+      {
+        name: "Team Building",
+        description: "Hiring strategies, org design, and culture development for high-performing engineering teams."
+      },
+      {
+        name: "Vendor Evaluation",
+        description: "Objective assessment of technology vendors, tools, and platforms for your specific needs."
+      },
+      {
+        name: "Technical Due Diligence",
+        description: "Deep-dive assessments for M&A, investments, or major technology decisions."
+      }
+    ],
+    outcomes: [
+      "Built engineering teams from 5 to 20+ engineers",
+      "Defined technology roadmaps driving 3-year growth",
+      "Reduced technical debt while accelerating delivery"
+    ]
+  }
+];
+
+const process = [
+  {
+    step: "1",
+    title: "Discovery",
+    description: "We start with understanding your business goals, current challenges, and where technology can create the most impact."
+  },
+  {
+    step: "2",
+    title: "Strategy",
+    description: "I develop a tailored approach with clear milestones, risks, and expected outcomes aligned with your timeline."
+  },
+  {
+    step: "3",
+    title: "Execution",
+    description: "Hands-on implementation with regular check-ins, documentation, and knowledge transfer to your team."
+  },
+  {
+    step: "4",
+    title: "Optimization",
+    description: "Continuous improvement, monitoring, and iteration to ensure solutions deliver lasting value."
+  }
+];
+---
+
+<BaseLayout title="Solutions | Ashok Pokharel - Fractional CTO">
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="solutions-hero">
+      <div class="container">
+        <h1 class="page-title">Solutions</h1>
+        <p class="page-subtitle">
+          End-to-end technical solutions that drive business growth.
+          Not just tools—complete systems built for results.
+        </p>
+      </div>
+    </section>
+
+    <!-- Solutions Grid -->
+    <section class="solutions-detail">
+      <div class="container">
+        {solutions.map((solution, index) => (
+          <article id={solution.id} class="solution-block" style={`--delay: ${index * 0.1}s`}>
+            <div class="solution-header">
+              <div class="solution-icon" set:html={solution.icon} />
+              <div>
+                <h2 class="solution-title">{solution.title}</h2>
+                <p class="solution-tagline">{solution.tagline}</p>
+              </div>
+            </div>
+
+            <p class="solution-description">{solution.description}</p>
+
+            <div class="solution-content">
+              <div class="services-list">
+                <h3>What I Deliver</h3>
+                <ul>
+                  {solution.services.map((service) => (
+                    <li>
+                      <strong>{service.name}</strong>
+                      <span>{service.description}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="outcomes-list">
+                <h3>Expected Outcomes</h3>
+                <ul>
+                  {solution.outcomes.map((outcome) => (
+                    <li>{outcome}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+      <div class="container">
+        <h2 class="section-title">How I Work</h2>
+        <div class="process-grid">
+          {process.map((step) => (
+            <div class="process-step">
+              <span class="step-number">{step.step}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Transform Your Technology?</h2>
+        <p>Let's discuss how these solutions can drive growth for your business.</p>
+        <a href="mailto:ashokpokharel977@gmail.com" class="btn btn-primary btn-large">
+          Schedule a Conversation
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .solutions-hero {
+    padding: calc(4rem + 64px) 0 var(--space-2xl);
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .solutions-detail {
+    padding: var(--space-2xl) 0;
+  }
+
+  .solution-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .solution-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+
+  .solution-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    border-radius: var(--radius-lg);
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .solution-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .solution-tagline {
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .solution-description {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-xl);
+    max-width: 800px;
+  }
+
+  .solution-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .services-list h3,
+  .outcomes-list h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .services-list ul {
+    list-style: none;
+  }
+
+  .services-list li {
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .services-list li:last-child {
+    border-bottom: none;
+  }
+
+  .services-list strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+  }
+
+  .services-list span {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .outcomes-list {
+    background: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    height: fit-content;
+  }
+
+  .outcomes-list ul {
+    list-style: none;
+  }
+
+  .outcomes-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: var(--space-sm);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .outcomes-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  /* Process Section */
+  .process-section {
+    padding: var(--space-2xl) 0;
+    background: var(--bg-secondary);
+  }
+
+  .process-section .section-title {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .process-section .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .process-step {
+    text-align: center;
+    padding: var(--space-xl);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: var(--accent);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: var(--space-md);
+  }
+
+  .process-step h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .process-step p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: var(--space-3xl) 0;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .btn-large {
+    padding: var(--space-md) var(--space-xl);
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .btn-large svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .btn-large:hover svg {
+    transform: translateX(4px);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .solution-content {
+      grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .solution-header {
+      flex-direction: column;
+    }
+
+    .solution-icon {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

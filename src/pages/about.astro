@@ -1,0 +1,502 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Experience from '../components/Experience.astro';
+import Certifications from '../components/Certifications.astro';
+
+const timeline = [
+  {
+    year: "2024",
+    title: "Fractional CTO & AI Solutions",
+    description: "Expanded into AI/GenAI solutions, helping organizations build intelligent applications with agentic systems and RAG pipelines."
+  },
+  {
+    year: "2022",
+    title: "Enterprise Cloud Migration",
+    description: "Led major data center to cloud migrations for financial services companies, architecting complex hybrid cloud solutions."
+  },
+  {
+    year: "2020",
+    title: "Technical Leadership",
+    description: "Stepped into leadership roles, building and mentoring DevOps teams while driving technical strategy for enterprise clients."
+  },
+  {
+    year: "2018",
+    title: "Security & DevOps",
+    description: "Focused on security-first infrastructure, combining DevOps practices with robust security frameworks."
+  },
+  {
+    year: "2014",
+    title: "Cloud Journey Begins",
+    description: "Started working with cloud technologies, discovering the power of infrastructure as code and automation."
+  }
+];
+
+const values = [
+  {
+    title: "Business-First Thinking",
+    description: "Technology is a means to an end. Every solution I build is designed to drive measurable business outcomes, not just technical elegance.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`
+  },
+  {
+    title: "Pragmatic Innovation",
+    description: "I embrace new technologies when they solve real problems, not for the sake of being cutting-edge. Boring technology that works is often the right choice.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"></path><circle cx="12" cy="12" r="4"></circle></svg>`
+  },
+  {
+    title: "Knowledge Transfer",
+    description: "My goal is to make myself unnecessary. I build solutions and train teams so organizations can sustain and evolve their technology independently.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`
+  },
+  {
+    title: "Continuous Learning",
+    description: "The technology landscape changes constantly. I dedicate significant time to learning, experimenting, and staying ahead of industry trends.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`
+  }
+];
+
+const facts = [
+  { number: "10+", label: "Years Experience" },
+  { number: "20+", label: "Engineers Mentored" },
+  { number: "3", label: "Cloud Certifications" },
+  { number: "50+", label: "Projects Delivered" }
+];
+---
+
+<BaseLayout title="About | Ashok Pokharel - Fractional CTO">
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-image">
+            <img src="/profile.jpg" alt="Ashok Pokharel" />
+          </div>
+          <div class="hero-text">
+            <h1>About Me</h1>
+            <p class="lead">
+              I'm Ashok Pokharel, a Fractional CTO and Solutions Architect based in Kathmandu, Nepal,
+              working with clients globally. I help organizations transform through cloud-native
+              architecture, AI innovation, and strategic technical leadership.
+            </p>
+            <p>
+              With over a decade of experience building and leading engineering teams, I've learned
+              that great technology is only valuable when it solves real business problems. That's
+              why I focus on outcomes—reduced costs, increased revenue, faster delivery—not just
+              technical metrics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          {facts.map((fact) => (
+            <div class="stat-item">
+              <span class="stat-number">{fact.number}</span>
+              <span class="stat-label">{fact.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section (Full with dates) -->
+    <Experience />
+
+    <!-- Certifications Section (moved from homepage) -->
+    <Certifications />
+
+    <!-- Story Section -->
+    <section class="story-section">
+      <div class="container">
+        <h2 class="section-title">My Journey</h2>
+        <div class="story-content">
+          <p>
+            My career started in electronics and communications, but I quickly discovered my passion
+            for building systems that scale. Early exposure to Linux and open-source tools sparked a
+            curiosity that led me from hardware into the world of cloud infrastructure and automation.
+          </p>
+          <p>
+            Over the years, I've worn many hats—security engineer, DevOps engineer, solution architect,
+            and technical lead. Each role taught me something valuable: security taught me to think about
+            risk, DevOps taught me to automate everything, and leadership taught me that technology
+            decisions are ultimately business decisions.
+          </p>
+          <p>
+            Today, I focus on helping growing companies navigate complex technology challenges. Whether
+            it's migrating legacy systems to the cloud, implementing AI solutions, or building
+            high-performing engineering teams, I bring both strategic vision and hands-on expertise
+            to every engagement.
+          </p>
+        </div>
+
+        <div class="timeline">
+          {timeline.map((item, index) => (
+            <div class="timeline-item" style={`--delay: ${index * 0.1}s`}>
+              <span class="timeline-year">{item.year}</span>
+              <div class="timeline-content">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+      <div class="container">
+        <h2 class="section-title">How I Work</h2>
+        <div class="values-grid">
+          {values.map((value, index) => (
+            <div class="value-card" style={`--delay: ${index * 0.1}s`}>
+              <div class="value-icon" set:html={value.icon} />
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Beyond Work Section -->
+    <section class="beyond-section">
+      <div class="container">
+        <h2 class="section-title">Beyond Work</h2>
+        <div class="beyond-content">
+          <p>
+            When I'm not architecting cloud solutions or debugging Kubernetes clusters, you'll find me
+            exploring the mountains around Kathmandu, experimenting with new AI tools, or mentoring
+            the next generation of engineers through workshops and community events.
+          </p>
+          <p>
+            I'm a strong believer in giving back to the community. I regularly speak at meetups and
+            conferences, contribute to open-source projects, and help aspiring engineers navigate
+            their career paths in technology.
+          </p>
+          <div class="tagline">
+            <code>"Automate more, sleep better."</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Let's Work Together</h2>
+        <p>Have a project in mind? I'd love to hear about your challenges and explore how I can help.</p>
+        <div class="cta-buttons">
+          <a href="mailto:ashokpokharel977@gmail.com" class="btn btn-primary">
+            Get in Touch
+          </a>
+          <a href="/solutions" class="btn btn-outline">
+            View Solutions
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding: calc(4rem + 64px) 0 var(--space-2xl);
+    background: var(--bg-secondary);
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .hero-image {
+    position: relative;
+  }
+
+  .hero-image img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 4px solid var(--border);
+  }
+
+  .hero-text h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-text .lead {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* Stats Section */
+  .stats-section {
+    padding: var(--space-xl) 0;
+    background: var(--accent);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    text-align: center;
+  }
+
+  .stat-item {
+    color: white;
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  /* Story Section */
+  .story-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .story-content {
+    max-width: 800px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .story-content p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: var(--space-2xl);
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: var(--space-xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-2xl) - 5px);
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 2px solid var(--bg-primary);
+  }
+
+  .timeline-year {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline-content p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Values Section */
+  .values-section {
+    padding: var(--space-2xl) 0;
+    background: var(--bg-secondary);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .value-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    color: var(--accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .value-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .value-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Beyond Section */
+  .beyond-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .beyond-content {
+    max-width: 800px;
+  }
+
+  .beyond-content p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+  }
+
+  .tagline {
+    margin-top: var(--space-xl);
+  }
+
+  .tagline code {
+    font-size: 1.25rem;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: var(--space-3xl) 0;
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-image {
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

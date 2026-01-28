@@ -1,0 +1,210 @@
+---
+const experiences = [
+  {
+    title: "Technical Lead",
+    company: "Adex International Pvt. Ltd.",
+    location: "Nepal",
+    period: "Aug 2020 - Present",
+    description: [
+      "Lead and manage DevOps teams, measure outcomes, and continuously improve processes",
+      "Design and deploy highly available, fault-tolerant cloud-native architectures on AWS",
+      "Build internal tools, frameworks & products to enhance workflows and control costs",
+      "Provide training and mentorship to team members and clients on cloud best practices",
+      "Architect cloud-native solutions in ECS, Kubernetes, Serverless, and Data Lake with AWS Glue, Athena, Lambda",
+    ],
+    skills: ["AWS", "Kubernetes", "Terraform", "Python", "CI/CD", "Team Leadership"],
+  },
+  {
+    title: "Senior Solution Architect",
+    company: "Certegy (via Adex)",
+    location: "Australia (Contract)",
+    period: "2022 - 2024",
+    description: [
+      "Led large-scale data center to cloud migration project for a major financial services company",
+      "Migrated legacy applications across diverse technology stacks including C, Java, and web applications",
+      "Designed and implemented complex networking architecture for hybrid cloud connectivity",
+      "Modernized legacy systems while ensuring minimal disruption to business operations",
+      "Coordinated cross-functional teams to deliver migration milestones on schedule",
+    ],
+    skills: ["Cloud Migration", "Solution Architecture", "Legacy Modernization", "Networking", "Java", "C"],
+  },
+  {
+    title: "DevOps Engineer",
+    company: "Home Loan Experts",
+    location: "Australia (Remote)",
+    period: "Jun 2019 - Oct 2022",
+    description: [
+      "Created custom build and deployment tools for Serverless, AWS SAM, and Terraform",
+      "Designed scalable multi-environment Infrastructure as Code with Terraform and Terragrunt",
+      "Centralized monitoring and alerting with DataDog in serverless environments",
+      "Architected event-driven serverless applications improving workflow efficiency by 30%",
+      "Researched and implemented tools for both DevOps and business needs",
+    ],
+    skills: ["AWS SAM", "Serverless", "Terraform", "Terragrunt", "DataDog", "Event-Driven Architecture"],
+  },
+  {
+    title: "R&D Security Engineer",
+    company: "Genese Solutions",
+    location: "Nepal",
+    period: "Jun 2018 - Apr 2019",
+    description: [
+      "Conducted penetration testing on web applications and APIs using proven frameworks",
+      "Completed PCI, SOC, and HIPAA compliance assessments and attestations",
+      "Implemented AWS security pipeline using Guard Duty, CloudTrail, Inspector, WAF, Security Hub",
+      "Deployed SIEM solutions using AWS-managed services",
+      "Managed Kubernetes security in cloud and self-hosted environments",
+    ],
+    skills: ["Penetration Testing", "AWS Security", "Compliance", "Kubernetes Security", "SIEM"],
+  },
+];
+---
+
+<section id="experience" class="section">
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+
+    <div class="timeline">
+      {experiences.map((exp, index) => (
+        <div class="timeline-item" style={`--delay: ${index * 0.1}s`}>
+          <div class="timeline-marker"></div>
+          <div class="timeline-content card">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-title">{exp.title}</h3>
+                <p class="timeline-company">{exp.company}</p>
+                <p class="timeline-location">{exp.location}</p>
+              </div>
+              <span class="timeline-period">{exp.period}</span>
+            </div>
+            <ul class="timeline-description">
+              {exp.description.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <div class="timeline-skills">
+              {exp.skills.map((skill) => (
+                <span class="tag">{skill}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: var(--space-xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 1.5rem;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 4px var(--bg-primary);
+  }
+
+  .timeline-content {
+    margin-left: var(--space-md);
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .timeline-title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline-company {
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline-location {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .timeline-period {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    background: var(--bg-tertiary);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .timeline-description {
+    list-style: none;
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline-description li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: var(--space-sm);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .timeline-description li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .timeline-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  @media (max-width: 600px) {
+    .timeline-header {
+      flex-direction: column;
+    }
+
+    .timeline-period {
+      align-self: flex-start;
+    }
+  }
+</style>

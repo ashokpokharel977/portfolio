@@ -1,0 +1,153 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Blog | Ashok Pokharel" description="Thoughts on DevOps, cloud architecture, security, and automation.">
+  <Header />
+  <main class="blog-page">
+    <div class="container">
+      <header class="blog-header">
+        <h1>Blog</h1>
+        <p>Thoughts on DevOps, cloud architecture, security, and automation.</p>
+      </header>
+
+      {posts.length === 0 ? (
+        <p class="no-posts">No posts yet. Check back soon!</p>
+      ) : (
+        <div class="posts-grid">
+          {posts.map((post) => (
+            <article class="post-card card">
+              <a href={`/blog/${post.slug}`} class="post-link">
+                {post.data.heroImage && (
+                  <img src={post.data.heroImage} alt={post.data.title} class="post-image" />
+                )}
+                <div class="post-content">
+                  <time datetime={post.data.pubDate.toISOString()} class="post-date">
+                    {post.data.pubDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  <h2 class="post-title">{post.data.title}</h2>
+                  <p class="post-description">{post.data.description}</p>
+                  {post.data.tags.length > 0 && (
+                    <div class="post-tags">
+                      {post.data.tags.slice(0, 3).map((tag) => (
+                        <span class="tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+    min-height: 100vh;
+  }
+
+  .blog-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .blog-header h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .blog-header p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+  }
+
+  .no-posts {
+    text-align: center;
+    color: var(--text-muted);
+    padding: var(--space-3xl);
+  }
+
+  .posts-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .post-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .post-link {
+    display: block;
+    color: inherit;
+  }
+
+  .post-link:hover {
+    color: inherit;
+  }
+
+  .post-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .post-content {
+    padding: var(--space-lg);
+  }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .post-title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .post-link:hover .post-title {
+    color: var(--accent);
+  }
+
+  .post-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  @media (min-width: 768px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

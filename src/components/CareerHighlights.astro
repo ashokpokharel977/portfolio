@@ -1,0 +1,154 @@
+---
+const companies = [
+  {
+    name: "Adex International",
+    role: "Technical Lead",
+    logo: null, // Can add logo paths later
+  },
+  {
+    name: "Certegy",
+    role: "Senior Solution Architect",
+    logo: null,
+  },
+  {
+    name: "Home Loan Experts",
+    role: "DevOps Engineer",
+    logo: null,
+  },
+  {
+    name: "Genese Solutions",
+    role: "R&D Security Engineer",
+    logo: null,
+  },
+];
+---
+
+<section id="career" class="section career-section">
+  <div class="container">
+    <h2 class="section-title">Companies I've Worked With</h2>
+    <div class="companies-grid">
+      {companies.map((company, index) => (
+        <div class="company-card" style={`--delay: ${index * 0.1}s`}>
+          <div class="company-content">
+            <h3 class="company-name">{company.name}</h3>
+            <p class="company-role">{company.role}</p>
+          </div>
+          <div class="company-glow"></div>
+        </div>
+      ))}
+    </div>
+    <div class="career-cta">
+      <a href="/about#experience" class="btn btn-outline">
+        View Full Experience
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .career-section {
+    background: var(--bg-secondary);
+  }
+
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .company-card {
+    position: relative;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .company-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .company-card:hover .company-glow {
+    opacity: 1;
+  }
+
+  .company-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+
+  .company-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .company-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+  }
+
+  .company-role {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .career-cta {
+    text-align: center;
+  }
+
+  .career-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .career-cta .btn svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .career-cta .btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .companies-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .companies-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

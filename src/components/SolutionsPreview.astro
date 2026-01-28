@@ -1,0 +1,186 @@
+---
+const solutions = [
+  {
+    title: "AI & GenAI Solutions",
+    description: "Build intelligent applications with agentic systems, RAG pipelines, and custom AI automation that transforms how your business operates.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m9 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"></path></svg>`,
+    highlights: ["Agentic Applications", "RAG Systems", "Model Fine-tuning"],
+  },
+  {
+    title: "Cloud Transformation",
+    description: "Migrate, modernize, and optimize your infrastructure with battle-tested strategies across AWS, Azure, and GCP.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`,
+    highlights: ["Cloud Migration", "Multi-Cloud", "Legacy Modernization"],
+  },
+  {
+    title: "DevOps & Platform Engineering",
+    description: "Accelerate delivery with robust CI/CD pipelines, Kubernetes platforms, and infrastructure as code at scale.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v10"></path><path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24"></path><path d="M1 12h6m6 0h10"></path><path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24"></path></svg>`,
+    highlights: ["CI/CD Pipelines", "Kubernetes", "Platform Engineering"],
+  },
+  {
+    title: "Technical Leadership & Advisory",
+    description: "Strategic guidance as a Fractional CTO - from technology roadmaps to team building and vendor evaluation.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
+    highlights: ["Fractional CTO", "Team Building", "Technology Strategy"],
+  },
+];
+---
+
+<section id="solutions" class="section solutions-section">
+  <div class="container">
+    <div class="solutions-header">
+      <h2 class="section-title">What I Do</h2>
+      <p class="solutions-intro">
+        I build end-to-end technical solutions that align technology with business outcomes.
+        Not just tools — complete systems that drive growth.
+      </p>
+    </div>
+
+    <div class="solutions-grid">
+      {solutions.map((solution, index) => (
+        <article class="solution-card card" style={`--delay: ${index * 0.1}s`}>
+          <div class="solution-icon" set:html={solution.icon} />
+          <h3 class="solution-title">{solution.title}</h3>
+          <p class="solution-description">{solution.description}</p>
+          <div class="solution-highlights">
+            {solution.highlights.map((highlight) => (
+              <span class="highlight-tag">{highlight}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="solutions-cta">
+      <a href="mailto:ashokpokharel977@gmail.com" class="btn btn-primary">
+        Discuss Your Project
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .solutions-section {
+    background: var(--bg-secondary);
+  }
+
+  .solutions-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .solutions-header .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .solutions-intro {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .solution-card {
+    text-align: center;
+    padding: var(--space-xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .solution-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    border-radius: var(--radius-lg);
+    color: white;
+    margin-bottom: var(--space-lg);
+    transition: all var(--transition-base);
+  }
+
+  .solution-card:hover .solution-icon {
+    box-shadow: var(--glow-md);
+    transform: scale(1.05);
+  }
+
+  .solution-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+  }
+
+  .solution-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+    flex-grow: 1;
+  }
+
+  .solution-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    justify-content: center;
+  }
+
+  .highlight-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+  }
+
+  .solution-card:hover .highlight-tag {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .solutions-cta {
+    text-align: center;
+    margin-top: var(--space-2xl);
+  }
+
+  .solutions-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .solutions-cta .btn svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .solutions-cta .btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 600px) {
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

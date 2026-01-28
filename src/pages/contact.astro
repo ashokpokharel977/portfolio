@@ -1,0 +1,508 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const contactMethods = [
+  {
+    title: "Email",
+    value: "ashokpokharel977@gmail.com",
+    link: "mailto:ashokpokharel977@gmail.com",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+    description: "Best for project inquiries"
+  },
+  {
+    title: "LinkedIn",
+    value: "ashokpokharel977",
+    link: "https://linkedin.com/in/ashokpokharel977",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`,
+    description: "Connect professionally"
+  },
+  {
+    title: "GitHub",
+    value: "ashokpokharel977",
+    link: "https://github.com/ashokpokharel977",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`,
+    description: "See my open source work"
+  }
+];
+
+const faqs = [
+  {
+    question: "What's your typical engagement model?",
+    answer: "I offer flexible engagement models—from short-term consulting and project-based work to ongoing fractional CTO arrangements. We'll discuss your needs and find the best fit during our initial conversation."
+  },
+  {
+    question: "Do you work with startups?",
+    answer: "Absolutely. I work with companies of all sizes, from early-stage startups needing their first technical leader to established enterprises undertaking major transformations. Each engagement is tailored to your specific context and budget."
+  },
+  {
+    question: "What's your availability?",
+    answer: "My availability varies based on current commitments. I typically work with 2-3 clients simultaneously to ensure I can give each project the attention it deserves. Reach out and we can discuss timing."
+  },
+  {
+    question: "Do you work remotely?",
+    answer: "Yes, I work primarily remotely and have experience leading distributed teams across multiple time zones. I'm based in Nepal (GMT+5:45) and have worked extensively with clients in Australia, the US, and Europe."
+  }
+];
+---
+
+<BaseLayout title="Contact | Ashok Pokharel - Fractional CTO">
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <div class="container">
+        <h1 class="page-title">Let's Talk</h1>
+        <p class="page-subtitle">
+          Have a project in mind or want to discuss how I can help your organization?
+          I'd love to hear from you.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="contact-main">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-section">
+            <h2>Send a Message</h2>
+            <form
+              action="https://formspree.io/f/your-form-id"
+              method="POST"
+              class="contact-form"
+              id="contact-form"
+            >
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company (Optional)</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Your company name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="service">What can I help with?</label>
+                <select id="service" name="service" required>
+                  <option value="">Select a service...</option>
+                  <option value="ai-genai">AI & GenAI Solutions</option>
+                  <option value="cloud">Cloud Transformation</option>
+                  <option value="devops">DevOps & Platform Engineering</option>
+                  <option value="leadership">Technical Leadership / Fractional CTO</option>
+                  <option value="other">Other / General Inquiry</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Tell me about your project or challenge..."
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Send Message
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <p class="form-note">
+                Or email me directly at <a href="mailto:ashokpokharel977@gmail.com">ashokpokharel977@gmail.com</a>
+              </p>
+            </form>
+          </div>
+
+          <!-- Contact Info Sidebar -->
+          <div class="contact-info-section">
+            <h2>Other Ways to Connect</h2>
+            <div class="contact-methods">
+              {contactMethods.map((method) => (
+                <a href={method.link} class="contact-method" target="_blank" rel="noopener noreferrer">
+                  <div class="method-icon" set:html={method.icon} />
+                  <div class="method-info">
+                    <h3>{method.title}</h3>
+                    <p class="method-value">{method.value}</p>
+                    <p class="method-desc">{method.description}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            <div class="location-info">
+              <h3>Location</h3>
+              <p>Kathmandu, Nepal</p>
+              <p class="timezone">GMT+5:45 · Available for global clients</p>
+            </div>
+
+            <div class="response-time">
+              <h3>Response Time</h3>
+              <p>I typically respond within 24-48 hours during business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          {faqs.map((faq, index) => (
+            <div class="faq-item" style={`--delay: ${index * 0.1}s`}>
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding: calc(4rem + 64px) 0 var(--space-2xl);
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .contact-main {
+    padding: var(--space-2xl) 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+  }
+
+  /* Form Section */
+  .contact-form-section h2,
+  .contact-info-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-form {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-lg);
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: var(--space-md);
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-group select {
+    cursor: pointer;
+  }
+
+  .btn-full {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    font-size: 1rem;
+  }
+
+  .form-note {
+    margin-top: var(--space-lg);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .form-note a {
+    color: var(--accent);
+  }
+
+  /* Contact Info Section */
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-method {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+
+  .contact-method:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .method-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .method-info h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .method-value {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .method-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .location-info,
+  .response-time {
+    padding: var(--space-lg);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .location-info h3,
+  .response-time h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .location-info p,
+  .response-time p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .timezone {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    padding: var(--space-2xl) 0;
+    background: var(--bg-secondary);
+  }
+
+  .faq-section .section-title {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .faq-section .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl);
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+  }
+
+  .faq-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+  }
+
+  .faq-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Simple form submission handling
+  const form = document.getElementById('contact-form');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form as HTMLFormElement);
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    if (submitBtn) {
+      submitBtn.textContent = 'Sending...';
+      submitBtn.setAttribute('disabled', 'true');
+    }
+
+    try {
+      const response = await fetch((form as HTMLFormElement).action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        (form as HTMLFormElement).reset();
+        if (submitBtn) {
+          submitBtn.innerHTML = 'Message Sent! ✓';
+          setTimeout(() => {
+            submitBtn.innerHTML = `Send Message <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>`;
+            submitBtn.removeAttribute('disabled');
+          }, 3000);
+        }
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      if (submitBtn) {
+        submitBtn.textContent = 'Error - Try Again';
+        submitBtn.removeAttribute('disabled');
+      }
+    }
+  });
+</script>
