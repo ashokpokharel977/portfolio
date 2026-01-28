@@ -1,24 +1,34 @@
 ---
 const companies = [
+    {
+    name: "TekBay International",
+    role: "Fractional CTO",
+    logo: "/images/companies/tekbay.png",
+    initials: "TB",
+  },
   {
     name: "Adex International",
     role: "Technical Lead",
-    logo: null, // Can add logo paths later
+    logo: "/images/companies/adex.png",
+    initials: "Adex",
   },
   {
     name: "Certegy",
     role: "Senior Solution Architect",
-    logo: null,
+    logo: "/images/companies/certegy.jpg",
+    initials: "C",
   },
   {
     name: "Home Loan Experts",
     role: "DevOps Engineer",
-    logo: null,
+    logo: "/images/companies/hle.jpg",
+    initials: "HLE",
   },
   {
     name: "Genese Solutions",
     role: "R&D Security Engineer",
-    logo: null,
+    logo: "/images/companies/genese.jpg",
+    initials: "GS",
   },
 ];
 ---
@@ -29,6 +39,16 @@ const companies = [
     <div class="companies-grid">
       {companies.map((company, index) => (
         <div class="company-card" style={`--delay: ${index * 0.1}s`}>
+          <div class="company-logo">
+            <img
+              src={company.logo}
+              alt={company.name}
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="company-logo-fallback">
+              <span>{company.initials}</span>
+            </div>
+          </div>
           <div class="company-content">
             <h3 class="company-name">{company.name}</h3>
             <p class="company-role">{company.role}</p>
@@ -91,6 +111,60 @@ const companies = [
     opacity: 0;
     transition: opacity var(--transition-base);
     pointer-events: none;
+  }
+
+  .company-logo {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin: 0 auto var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    background: white;
+    padding: 0.5rem;
+    transition: all var(--transition-base);
+  }
+
+  /* Ensure logos are visible in dark mode with white background */
+  :global([data-theme="dark"]) .company-logo img {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .company-card:hover .company-logo img {
+    box-shadow: var(--glow-sm);
+  }
+
+  .company-logo-fallback {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
+    transition: all var(--transition-base);
+  }
+
+  .company-logo-fallback span {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .company-card:hover .company-logo-fallback {
+    border-color: var(--accent);
+    box-shadow: var(--glow-sm);
   }
 
   .company-content {

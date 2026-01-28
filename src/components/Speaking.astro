@@ -1,0 +1,156 @@
+---
+const speaking = [
+  {
+    title: "AWS Cloud Workshop",
+    event: "2-Day Jumpstart to Cloud",
+    description: "Trained 50+ students on AWS fundamentals and cloud architecture",
+    type: "Workshop",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
+  },
+  {
+    title: "DevOps Training Program",
+    event: "DeerHold Technologies",
+    description: "Hands-on DevOps training for 15 professionals covering CI/CD, containers, and IaC",
+    type: "Training",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+  },
+  {
+    title: "Infrastructure from a Security Lens",
+    event: "DevOps Meetup",
+    description: "Speaker session on security-first infrastructure design and implementation",
+    type: "Meetup",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`,
+  },
+  {
+    title: "Are Agents the Future?",
+    event: "One2Watch",
+    description: "Panel discussion on AI agents and the future of automation",
+    type: "Conference",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>`,
+  },
+];
+---
+
+<section id="speaking" class="section speaking-section">
+  <div class="container">
+    <div class="speaking-header">
+      <h2 class="section-title">Speaking & Community</h2>
+      <p class="speaking-intro">
+        Sharing knowledge and building the tech community through workshops, talks, and mentorship.
+      </p>
+    </div>
+
+    <div class="speaking-grid">
+      {speaking.map((talk, index) => (
+        <div class="speaking-card card" style={`--delay: ${index * 0.1}s`}>
+          <div class="speaking-icon" set:html={talk.icon} />
+          <span class="speaking-type">{talk.type}</span>
+          <h3 class="speaking-title">{talk.title}</h3>
+          <p class="speaking-event">{talk.event}</p>
+          <p class="speaking-description">{talk.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .speaking-section {
+    background: var(--bg-secondary);
+  }
+
+  .speaking-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .speaking-header .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .speaking-intro {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .speaking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .speaking-card {
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .speaking-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    border-radius: var(--radius-lg);
+    color: white;
+    margin-bottom: var(--space-md);
+    transition: all var(--transition-base);
+  }
+
+  .speaking-card:hover .speaking-icon {
+    box-shadow: var(--glow-md);
+    transform: scale(1.05);
+  }
+
+  .speaking-type {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-sm);
+  }
+
+  .speaking-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .speaking-event {
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+  }
+
+  .speaking-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

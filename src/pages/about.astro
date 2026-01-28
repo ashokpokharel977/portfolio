@@ -72,7 +72,11 @@ const facts = [
       <div class="container">
         <div class="hero-content">
           <div class="hero-image">
-            <img src="/profile.jpg" alt="Ashok Pokharel" />
+            <div class="profile-image-wrapper">
+              <img src="/profile.jpg" alt="Ashok Pokharel" class="profile-image" />
+              <div class="profile-ring"></div>
+              <div class="profile-glow"></div>
+            </div>
           </div>
           <div class="hero-text">
             <h1>About Me</h1>
@@ -106,11 +110,11 @@ const facts = [
       </div>
     </section>
 
+    <!-- Certifications Section (Leadership & Credentials first) -->
+    <Certifications />
+
     <!-- Experience Section (Full with dates) -->
     <Experience />
-
-    <!-- Certifications Section (moved from homepage) -->
-    <Certifications />
 
     <!-- Story Section -->
     <section class="story-section">
@@ -222,12 +226,78 @@ const facts = [
 
   .hero-image {
     position: relative;
+    display: flex;
+    justify-content: center;
   }
 
-  .hero-image img {
+  .profile-image-wrapper {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .profile-image {
     width: 100%;
-    border-radius: var(--radius-lg);
-    border: 4px solid var(--border);
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--bg-secondary);
+    box-shadow: 0 20px 40px var(--shadow-lg), var(--glow-sm);
+    transition: all var(--transition-base);
+  }
+
+  .profile-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px var(--shadow-lg), var(--glow-lg);
+  }
+
+  .profile-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0.6;
+    animation: spin 20s linear infinite, ringGlow 3s ease-in-out infinite;
+  }
+
+  .profile-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0.3;
+    animation: ringPulse 2s ease-out infinite;
+  }
+
+  .profile-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0.5;
+    z-index: -1;
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes ringGlow {
+    0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
+    50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 40px var(--accent-glow); }
+  }
+
+  @keyframes ringPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
   }
 
   .hero-text h1 {
@@ -468,8 +538,12 @@ const facts = [
     }
 
     .hero-image {
-      max-width: 250px;
       margin: 0 auto;
+    }
+
+    .profile-image-wrapper {
+      width: 220px;
+      height: 220px;
     }
 
     .stats-grid {
