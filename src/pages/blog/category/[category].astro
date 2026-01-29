@@ -1,0 +1,209 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
+import { BLOG_CATEGORIES } from '../../../content/config';
+
+const categoryLabels: Record<string, string> = {
+  'devops': 'DevOps',
+  'cloud': 'Cloud',
+  'security': 'Security',
+  'ai': 'AI & ML',
+  'leadership': 'Leadership',
+  'automation': 'Automation',
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+
+  return BLOG_CATEGORIES.map(category => ({
+    params: { category },
+    props: {
+      category,
+      posts: posts
+        .filter(post => post.data.category === category)
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+      allTags,
+    },
+  }));
+}
+
+const { category, posts, allTags } = Astro.props;
+const categoryLabel = categoryLabels[category] || category;
+---
+
+<BaseLayout title={`${categoryLabel} Posts | Ashok Pokharel`}>
+  <Header />
+  <main class="blog-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Blog</h1>
+        <p class="page-subtitle">
+          Showing posts in <span class="category-highlight">{categoryLabel}</span>
+        </p>
+        <p class="post-count">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+      </header>
+
+      <div class="filters-section">
+        <CategoryNav categories={BLOG_CATEGORIES} baseUrl="/blog" activeCategory={category} />
+
+        {allTags.length > 0 && (
+          <div class="tags-inline">
+            <span class="tags-label">Filter by tag:</span>
+            <div class="tags-wrapper">
+              {allTags.slice(0, 10).map(tag => (
+                <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="tag-pill">{tag}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <section class="posts-section">
+        {posts.length === 0 ? (
+          <div class="no-posts">
+            <p>No posts in this category yet.</p>
+            <a href="/blog" class="btn btn-primary">View All Posts</a>
+          </div>
+        ) : (
+          <div class="posts-grid">
+            {posts.map(post => (
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.slug}
+                pubDate={post.data.pubDate}
+                heroImage={post.data.heroImage}
+                tags={post.data.tags}
+                category={post.data.category}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .page-header h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .category-highlight {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .post-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .filters-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .tags-inline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .tags-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .tag-pill {
+    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-pill:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
+  }
+
+  .no-posts {
+    text-align: center;
+    padding: var(--space-3xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .no-posts p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .posts-grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 640px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tags-inline {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

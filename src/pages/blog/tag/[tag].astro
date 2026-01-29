@@ -1,0 +1,214 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
+import { BLOG_CATEGORIES } from '../../../content/config';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const allTags = posts.flatMap(post => post.data.tags);
+  const uniqueTags = [...new Set(allTags)];
+
+  return uniqueTags.map(tag => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter(post => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+      allTags: uniqueTags,
+    },
+  }));
+}
+
+const { tag, posts, allTags } = Astro.props;
+---
+
+<BaseLayout title={`Posts tagged "${tag}" | Ashok Pokharel`}>
+  <Header />
+  <main class="blog-page">
+    <div class="container">
+      <header class="page-header">
+        <a href="/blog" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          All Posts
+        </a>
+        <h1>Posts tagged: <span class="tag-highlight">{tag}</span></h1>
+        <p class="post-count">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+      </header>
+
+      <div class="filters-section">
+        <CategoryNav categories={BLOG_CATEGORIES} baseUrl="/blog" />
+
+        {allTags.length > 0 && (
+          <div class="tags-inline">
+            <span class="tags-label">Other tags:</span>
+            <div class="tags-wrapper">
+              {allTags.filter(t => t !== tag).slice(0, 8).map(t => (
+                <a href={`/blog/tag/${encodeURIComponent(t)}`} class="tag-pill">{t}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <section class="posts-section">
+        {posts.length === 0 ? (
+          <div class="no-posts">
+            <p>No posts found with this tag.</p>
+            <a href="/blog" class="btn btn-primary">View All Posts</a>
+          </div>
+        ) : (
+          <div class="posts-grid">
+            {posts.map(post => (
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.slug}
+                pubDate={post.data.pubDate}
+                heroImage={post.data.heroImage}
+                tags={post.data.tags}
+                category={post.data.category}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .tag-highlight {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .post-count {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  .filters-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .tags-inline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .tags-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .tag-pill {
+    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-pill:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
+  }
+
+  .no-posts {
+    text-align: center;
+    padding: var(--space-3xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .no-posts p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .posts-grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 640px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tags-inline {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

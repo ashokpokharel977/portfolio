@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Search from '../components/Search.astro';
+---
+
+<BaseLayout title="Search | Ashok Pokharel" description="Search across all blog posts and case studies">
+  <Header />
+  <main class="search-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Search</h1>
+        <p>Find blog posts, case studies, and more</p>
+      </header>
+
+      <div class="search-wrapper">
+        <Search placeholder="Type to search..." />
+      </div>
+
+      <div class="search-tips">
+        <h3>Search Tips</h3>
+        <ul>
+          <li>Use keywords like <code>kubernetes</code>, <code>devops</code>, or <code>migration</code></li>
+          <li>Search for technologies: <code>terraform</code>, <code>aws</code>, <code>python</code></li>
+          <li>Find topics: <code>security</code>, <code>automation</code>, <code>ai</code></li>
+        </ul>
+      </div>
+
+      <div class="browse-sections">
+        <h3>Or Browse by Section</h3>
+        <div class="browse-cards">
+          <a href="/blog" class="browse-card">
+            <div class="browse-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+            <span class="browse-title">Blog</span>
+            <span class="browse-desc">Technical articles and insights</span>
+          </a>
+
+          <a href="/case-studies" class="browse-card">
+            <div class="browse-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span class="browse-title">Case Studies</span>
+            <span class="browse-desc">Real projects with measurable outcomes</span>
+          </a>
+
+          <a href="/solutions" class="browse-card">
+            <div class="browse-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <span class="browse-title">Solutions</span>
+            <span class="browse-desc">Services and expertise areas</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .search-page {
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .page-header h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-header p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+  }
+
+  .search-wrapper {
+    max-width: 600px;
+    margin: 0 auto var(--space-3xl);
+  }
+
+  .search-tips {
+    max-width: 600px;
+    margin: 0 auto var(--space-3xl);
+    padding: var(--space-lg);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .search-tips h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    color: var(--text-muted);
+  }
+
+  .search-tips ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .search-tips li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .search-tips li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .search-tips code {
+    font-size: 0.85em;
+    padding: 0.2em 0.4em;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+  }
+
+  .browse-sections {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .browse-sections h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .browse-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .browse-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xl);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+  }
+
+  .browse-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: var(--glow-md);
+  }
+
+  .browse-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-radius: var(--radius-md);
+    color: var(--accent);
+    margin-bottom: var(--space-md);
+    transition: all var(--transition-fast);
+  }
+
+  .browse-card:hover .browse-icon {
+    background: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
+  }
+
+  .browse-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .browse-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+</style>

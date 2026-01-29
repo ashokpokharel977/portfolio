@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import CategoryNav from '../../components/CategoryNav.astro';
+import { CASE_STUDY_CATEGORIES } from '../../content/config';
+
+const caseStudies = (await getCollection('case-studies'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featuredStudies = caseStudies.filter(s => s.data.featured);
+const regularStudies = caseStudies.filter(s => !s.data.featured);
+---
+
+<BaseLayout title="Case Studies | Ashok Pokharel - Fractional CTO">
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="cases-hero">
+      <div class="container">
+        <h1 class="page-title">Case Studies</h1>
+        <p class="page-subtitle">
+          Real projects, measurable outcomes. Here's how I've helped organizations
+          transform their technology and achieve business goals.
+        </p>
+      </div>
+    </section>
+
+    <!-- Case Studies List -->
+    <section class="cases-section">
+      <div class="container">
+        <CategoryNav categories={CASE_STUDY_CATEGORIES} baseUrl="/case-studies" />
+
+        {caseStudies.length === 0 ? (
+          <div class="no-cases">
+            <p>No case studies available yet. Check back soon!</p>
+          </div>
+        ) : (
+          <div class="cases-grid">
+            {caseStudies.map((study, index) => (
+              <CaseStudyCard
+                title={study.data.title}
+                client={study.data.client}
+                industry={study.data.industry}
+                duration={study.data.duration}
+                role={study.data.role}
+                challenge={study.data.challenge}
+                outcomes={study.data.outcomes}
+                technologies={study.data.technologies}
+                heroImage={study.data.heroImage}
+                slug={study.slug}
+                category={study.data.category}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Create Your Success Story?</h2>
+        <p>Let's discuss how I can help your organization achieve similar results.</p>
+        <div class="cta-buttons">
+          <a href="/contact" class="btn btn-primary">
+            Start a Conversation
+          </a>
+          <a href="/solutions" class="btn btn-outline">
+            Explore Solutions
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .cases-hero {
+    padding: calc(4rem + 64px) 0 var(--space-2xl);
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .cases-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .no-cases {
+    text-align: center;
+    padding: var(--space-3xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .cases-grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 900px) {
+    .cases-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: var(--space-3xl) 0;
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  @media (max-width: 600px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

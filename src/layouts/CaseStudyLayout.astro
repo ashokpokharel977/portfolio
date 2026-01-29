@@ -1,0 +1,391 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  client: string;
+  industry: string;
+  duration: string;
+  role: string;
+  challenge: string;
+  solution: string[];
+  outcomes: { metric: string; description: string }[];
+  technologies: string[];
+  heroImage?: string;
+  category: string;
+}
+
+const { title, client, industry, duration, role, challenge, solution, outcomes, technologies, heroImage, category } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  'cloud-migration': 'Cloud Migration',
+  'devops-transformation': 'DevOps Transformation',
+  'ai-automation': 'AI Automation',
+  'security': 'Security',
+};
+---
+
+<BaseLayout title={`${title} | Case Study`} description={challenge}>
+  <Header />
+  <main class="case-study-page" data-pagefind-body>
+    <article class="container">
+      <header class="case-header">
+        <a href="/case-studies" class="back-link">← All Case Studies</a>
+        <div class="case-meta">
+          <span class="category-badge">{categoryLabels[category] || category}</span>
+          <span class="industry-badge">{industry}</span>
+          <span class="duration">{duration}</span>
+        </div>
+        <h1>{title}</h1>
+        <p class="role"><strong>Role:</strong> {role}</p>
+        <p class="client"><strong>Client:</strong> {client}</p>
+      </header>
+
+      {heroImage && (
+        <div class="hero-image-container">
+          <img src={heroImage} alt={title} class="hero-image" />
+        </div>
+      )}
+
+      <section class="case-challenge">
+        <h2>The Challenge</h2>
+        <p>{challenge}</p>
+      </section>
+
+      <section class="case-solution">
+        <h2>The Solution</h2>
+        <ul>
+          {solution.map(item => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <section class="case-outcomes">
+        <h2>Key Outcomes</h2>
+        <div class="outcomes-grid">
+          {outcomes.map(o => (
+            <div class="outcome-card">
+              <span class="metric">{o.metric}</span>
+              <span class="description">{o.description}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="case-technologies">
+        <h2>Technologies Used</h2>
+        <div class="tech-tags">
+          {technologies.map(tech => <span class="tag">{tech}</span>)}
+        </div>
+      </section>
+
+      <!-- Extended content from markdown -->
+      <section class="extended-content prose">
+        <slot />
+      </section>
+
+      <div class="case-cta">
+        <h3>Interested in similar results?</h3>
+        <p>Let's discuss how I can help your organization achieve its goals.</p>
+        <a href="/contact" class="btn btn-primary">Get in Touch</a>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case-study-page {
+    padding-top: 6rem;
+    padding-bottom: var(--space-3xl);
+  }
+
+  .case-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .category-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius-sm);
+  }
+
+  .industry-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-sm);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent);
+    border-radius: var(--radius-sm);
+  }
+
+  .duration {
+    font-size: 0.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .case-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: var(--space-md);
+    line-height: 1.2;
+  }
+
+  .role,
+  .client {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero-image-container {
+    margin-bottom: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+  }
+
+  .case-challenge,
+  .case-solution,
+  .case-outcomes,
+  .case-technologies {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .case-challenge h2,
+  .case-solution h2,
+  .case-outcomes h2,
+  .case-technologies h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  .case-challenge p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .case-solution ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .case-solution li {
+    position: relative;
+    padding-left: 2rem;
+    padding-bottom: var(--space-md);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .case-solution li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .outcome-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+  }
+
+  .outcome-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-md);
+    border-color: var(--accent);
+  }
+
+  .outcome-card .metric {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .outcome-card .description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .tech-tags .tag {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+  }
+
+  .tech-tags .tag:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .extended-content {
+    margin-bottom: var(--space-3xl);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--border);
+  }
+
+  .extended-content :global(h2) {
+    font-size: 1.5rem;
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .extended-content :global(h3) {
+    font-size: 1.25rem;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .extended-content :global(p) {
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+    color: var(--text-secondary);
+  }
+
+  .extended-content :global(ul),
+  .extended-content :global(ol) {
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-lg);
+  }
+
+  .extended-content :global(li) {
+    margin-bottom: var(--space-sm);
+    color: var(--text-secondary);
+  }
+
+  .extended-content :global(code) {
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+  }
+
+  .extended-content :global(pre) {
+    background: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--space-lg);
+  }
+
+  .extended-content :global(pre code) {
+    padding: 0;
+    background: transparent;
+  }
+
+  .extended-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-lg);
+  }
+
+  .extended-content :global(th),
+  .extended-content :global(td) {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .extended-content :global(th) {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+  }
+
+  .case-cta {
+    text-align: center;
+    padding: var(--space-2xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .case-cta h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .case-cta p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (max-width: 600px) {
+    .outcomes-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .outcome-card .metric {
+      font-size: 1.5rem;
+    }
+  }
+</style>

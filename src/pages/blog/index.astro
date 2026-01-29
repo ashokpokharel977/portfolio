@@ -3,54 +3,74 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import CategoryNav from '../../components/CategoryNav.astro';
+import TagList from '../../components/TagList.astro';
+import { BLOG_CATEGORIES } from '../../content/config';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = posts.flatMap(p => p.data.tags);
+const uniqueTags = [...new Set(allTags)];
 ---
 
-<BaseLayout title="Blog | Ashok Pokharel" description="Thoughts on DevOps, cloud architecture, security, and automation.">
+<BaseLayout title="Blog | Ashok Pokharel" description="Thoughts on DevOps, cloud architecture, security, AI, and automation.">
   <Header />
   <main class="blog-page">
     <div class="container">
       <header class="blog-header">
         <h1>Blog</h1>
-        <p>Thoughts on DevOps, cloud architecture, security, and automation.</p>
+        <p>Thoughts on DevOps, cloud architecture, security, AI, and automation.</p>
       </header>
 
-      {posts.length === 0 ? (
-        <p class="no-posts">No posts yet. Check back soon!</p>
-      ) : (
-        <div class="posts-grid">
-          {posts.map((post) => (
-            <article class="post-card card">
-              <a href={`/blog/${post.slug}`} class="post-link">
-                {post.data.heroImage && (
-                  <img src={post.data.heroImage} alt={post.data.title} class="post-image" />
-                )}
-                <div class="post-content">
-                  <time datetime={post.data.pubDate.toISOString()} class="post-date">
-                    {post.data.pubDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  <h2 class="post-title">{post.data.title}</h2>
-                  <p class="post-description">{post.data.description}</p>
-                  {post.data.tags.length > 0 && (
-                    <div class="post-tags">
-                      {post.data.tags.slice(0, 3).map((tag) => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </a>
-            </article>
-          ))}
-        </div>
-      )}
+      <div class="filters-section">
+        <CategoryNav categories={BLOG_CATEGORIES} baseUrl="/blog" />
+
+        {uniqueTags.length > 0 && (
+          <div class="tags-inline">
+            <span class="tags-label">Filter by tag:</span>
+            <div class="tags-wrapper">
+              {uniqueTags.slice(0, 10).map(tag => (
+                <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="tag-pill">{tag}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <section class="posts-section">
+        {posts.length === 0 ? (
+          <div class="no-posts">
+            <div class="no-posts-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3>No posts yet</h3>
+            <p>Check back soon for new content!</p>
+          </div>
+        ) : (
+          <div class="posts-grid">
+            {posts.map((post) => (
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.slug}
+                pubDate={post.data.pubDate}
+                heroImage={post.data.heroImage}
+                tags={post.data.tags}
+                category={post.data.category}
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   </main>
   <Footer />
@@ -64,6 +84,7 @@ const posts = (await getCollection('blog'))
   }
 
   .blog-header {
+    text-align: center;
     margin-bottom: var(--space-2xl);
   }
 
@@ -75,79 +96,100 @@ const posts = (await getCollection('blog'))
   .blog-header p {
     font-size: 1.125rem;
     color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .filters-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .tags-inline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .tags-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .tag-pill {
+    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-pill:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
   }
 
   .no-posts {
     text-align: center;
-    color: var(--text-muted);
     padding: var(--space-3xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .no-posts-icon {
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .no-posts h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .no-posts p {
+    color: var(--text-muted);
   }
 
   .posts-grid {
     display: grid;
-    gap: var(--space-lg);
+    gap: var(--space-xl);
   }
 
-  .post-card {
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .post-link {
-    display: block;
-    color: inherit;
-  }
-
-  .post-link:hover {
-    color: inherit;
-  }
-
-  .post-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  .post-content {
-    padding: var(--space-lg);
-  }
-
-  .post-date {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    display: block;
-    margin-bottom: var(--space-sm);
-  }
-
-  .post-title {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-sm);
-    transition: color var(--transition-fast);
-  }
-
-  .post-link:hover .post-title {
-    color: var(--accent);
-  }
-
-  .post-description {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-md);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-  }
-
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .posts-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tags-inline {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>

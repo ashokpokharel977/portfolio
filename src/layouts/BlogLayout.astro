@@ -30,7 +30,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 <BaseLayout title={`${title} | Ashok Pokharel`} description={description}>
   <Header />
   <main class="blog-post">
-    <article class="container">
+    <article class="container" data-pagefind-body>
       <header class="post-header">
         <a href="/blog" class="back-link">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -55,7 +55,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
         {tags.length > 0 && (
           <div class="post-tags">
             {tags.map((tag) => (
-              <span class="tag">{tag}</span>
+              <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="tag">{tag}</a>
             ))}
           </div>
         )}
@@ -125,6 +125,18 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+  }
+
+  .post-tags .tag {
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .post-tags .tag:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
   }
 
   .post-hero-image {

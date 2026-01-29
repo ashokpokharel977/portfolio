@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import CaseStudyCard from '../../../components/CaseStudyCard.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
+import { CASE_STUDY_CATEGORIES } from '../../../content/config';
+
+const categoryLabels: Record<string, string> = {
+  'cloud-migration': 'Cloud Migration',
+  'devops-transformation': 'DevOps Transformation',
+  'ai-automation': 'AI Automation',
+  'security': 'Security',
+};
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('case-studies');
+
+  return CASE_STUDY_CATEGORIES.map(category => ({
+    params: { category },
+    props: {
+      category,
+      caseStudies: caseStudies
+        .filter(study => study.data.category === category)
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { category, caseStudies } = Astro.props;
+const categoryLabel = categoryLabels[category] || category;
+---
+
+<BaseLayout title={`${categoryLabel} Case Studies | Ashok Pokharel`}>
+  <Header />
+  <main>
+    <section class="cases-hero">
+      <div class="container">
+        <h1 class="page-title">Case Studies</h1>
+        <p class="page-subtitle">
+          Showing <span class="category-highlight">{categoryLabel}</span> projects
+        </p>
+      </div>
+    </section>
+
+    <section class="cases-section">
+      <div class="container">
+        <CategoryNav categories={CASE_STUDY_CATEGORIES} baseUrl="/case-studies" activeCategory={category} />
+
+        {caseStudies.length === 0 ? (
+          <div class="no-cases">
+            <p>No case studies in this category yet.</p>
+            <a href="/case-studies" class="btn btn-outline">View All Case Studies</a>
+          </div>
+        ) : (
+          <div class="cases-grid">
+            {caseStudies.map((study) => (
+              <CaseStudyCard
+                title={study.data.title}
+                client={study.data.client}
+                industry={study.data.industry}
+                duration={study.data.duration}
+                role={study.data.role}
+                challenge={study.data.challenge}
+                outcomes={study.data.outcomes}
+                technologies={study.data.technologies}
+                heroImage={study.data.heroImage}
+                slug={study.slug}
+                category={study.data.category}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .cases-hero {
+    padding: calc(4rem + 64px) 0 var(--space-2xl);
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+  }
+
+  .category-highlight {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .cases-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .no-cases {
+    text-align: center;
+    padding: var(--space-3xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .no-cases p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cases-grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 900px) {
+    .cases-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>

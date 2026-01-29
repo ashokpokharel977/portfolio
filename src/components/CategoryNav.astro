@@ -1,0 +1,77 @@
+---
+interface Props {
+  categories: readonly string[];
+  baseUrl: string;
+  activeCategory?: string;
+  showAll?: boolean;
+}
+
+const { categories, baseUrl, activeCategory, showAll = true } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  // Blog categories
+  'devops': 'DevOps',
+  'cloud': 'Cloud',
+  'security': 'Security',
+  'ai': 'AI & ML',
+  'leadership': 'Leadership',
+  'automation': 'Automation',
+  // Case study categories
+  'cloud-migration': 'Cloud Migration',
+  'devops-transformation': 'DevOps Transformation',
+  'ai-automation': 'AI Automation',
+};
+---
+
+<nav class="category-nav">
+  {showAll && (
+    <a
+      href={baseUrl}
+      class:list={['category-link', { active: !activeCategory }]}
+    >
+      All
+    </a>
+  )}
+  {categories.map(cat => (
+    <a
+      href={`${baseUrl}/category/${cat}`}
+      class:list={['category-link', { active: cat === activeCategory }]}
+    >
+      {categoryLabels[cat] || cat}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .category-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+
+  .category-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .category-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: var(--glow-sm);
+  }
+
+  .category-link.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
+  }
+</style>

@@ -1,0 +1,222 @@
+---
+interface Props {
+  title: string;
+  client: string;
+  industry: string;
+  duration: string;
+  role: string;
+  challenge: string;
+  outcomes: { metric: string; description: string }[];
+  technologies: string[];
+  heroImage?: string;
+  slug: string;
+  category: string;
+}
+
+const { title, client, industry, duration, role, challenge, outcomes, technologies, heroImage, slug, category } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  'cloud-migration': 'Cloud Migration',
+  'devops-transformation': 'DevOps Transformation',
+  'ai-automation': 'AI Automation',
+  'security': 'Security',
+};
+---
+
+<article class="case-card card">
+  <a href={`/case-studies/${slug}`} class="card-link">
+    <div class="card-header">
+      <div class="card-meta">
+        <span class="industry-badge">{industry}</span>
+        <span class="duration">{duration}</span>
+      </div>
+      <h3 class="card-title">{title}</h3>
+      <p class="card-role">Role: {role}</p>
+    </div>
+
+    <p class="card-challenge">{challenge}</p>
+
+    <div class="outcomes-preview">
+      {outcomes.slice(0, 3).map(outcome => (
+        <div class="outcome-item">
+          <span class="outcome-metric">{outcome.metric}</span>
+          <span class="outcome-desc">{outcome.description}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="card-footer">
+      <div class="tech-tags">
+        {technologies.slice(0, 4).map(tech => (
+          <span class="tech-tag">{tech}</span>
+        ))}
+        {technologies.length > 4 && (
+          <span class="tech-more">+{technologies.length - 4}</span>
+        )}
+      </div>
+      <span class="read-more">Read Case Study →</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .case-card {
+    padding: 0;
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-md);
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+  }
+
+  .card-header {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-meta {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .industry-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius-sm);
+  }
+
+  .duration {
+    font-size: 0.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    transition: color var(--transition-fast);
+    line-height: 1.4;
+  }
+
+  .case-card:hover .card-title {
+    color: var(--accent);
+  }
+
+  .card-role {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .card-challenge {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+  }
+
+  .outcomes-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+
+  .outcome-item {
+    text-align: center;
+  }
+
+  .outcome-metric {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .outcome-desc {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tech-tag {
+    font-size: 0.7rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+  }
+
+  .case-card:hover .tech-tag {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .tech-more {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .read-more {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    transition: all var(--transition-fast);
+  }
+
+  .case-card:hover .read-more {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 500px) {
+    .outcomes-preview {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

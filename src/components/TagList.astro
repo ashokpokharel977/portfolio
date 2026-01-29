@@ -1,0 +1,98 @@
+---
+interface Props {
+  tags: string[];
+  baseUrl?: string;
+  activeTag?: string;
+  limit?: number;
+}
+
+const { tags, baseUrl = '/blog/tag', activeTag, limit } = Astro.props;
+
+// Count tag occurrences and sort by frequency
+const tagCounts = tags.reduce((acc, tag) => {
+  acc[tag] = (acc[tag] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const sortedTags = Object.entries(tagCounts)
+  .sort((a, b) => b[1] - a[1])
+  .map(([tag]) => tag);
+
+const displayTags = limit ? sortedTags.slice(0, limit) : sortedTags;
+---
+
+<div class="tag-list">
+  <h3 class="tag-list-title">Tags</h3>
+  <div class="tags-container">
+    {displayTags.map(tag => (
+      <a
+        href={`${baseUrl}/${encodeURIComponent(tag)}`}
+        class:list={['tag-link', { active: tag === activeTag }]}
+      >
+        {tag}
+        {tagCounts[tag] > 1 && <span class="tag-count">{tagCounts[tag]}</span>}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tag-list {
+    margin-bottom: var(--space-xl);
+  }
+
+  .tag-list-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .tag-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-link:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: var(--glow-sm);
+  }
+
+  .tag-link.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .tag-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-full);
+  }
+
+  .tag-link:not(.active) .tag-count {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+  }
+</style>
