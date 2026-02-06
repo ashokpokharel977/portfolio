@@ -132,7 +132,7 @@ Trained 50+ students on AWS fundamentals and cloud architecture
 ---
 
 ### DevOps Training Program
-**DeerHold Technologies** | Training
+**DeerHold Technologies** | Training | 3 Months
 
 Hands-on DevOps training for 15 professionals covering CI/CD, containers, and IaC
 

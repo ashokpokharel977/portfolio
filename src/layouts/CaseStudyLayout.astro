@@ -330,17 +330,52 @@ const categoryLabels: Record<string, string> = {
     border-radius: var(--radius-sm);
   }
 
-  .extended-content :global(pre) {
-    background: var(--bg-tertiary);
+  .extended-content :global(pre),
+  .extended-content :global(pre.astro-code) {
+    position: relative;
+    background: var(--code-bg) !important;
+    border: 1px solid var(--code-border);
     padding: var(--space-lg);
+    padding-top: var(--space-xl);
     border-radius: var(--radius-md);
     overflow-x: auto;
     margin-bottom: var(--space-lg);
   }
 
-  .extended-content :global(pre code) {
+  .extended-content :global(pre code),
+  .extended-content :global(pre.astro-code code) {
     padding: 0;
-    background: transparent;
+    background: transparent !important;
+  }
+
+  .extended-content :global(.copy-button) {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    color: var(--code-text);
+    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--transition-fast), background var(--transition-fast);
+  }
+
+  .extended-content :global(pre:hover .copy-button) {
+    opacity: 1;
+  }
+
+  .extended-content :global(.copy-button:hover) {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .extended-content :global(.copy-button.copied) {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
   }
 
   .extended-content :global(table) {
@@ -389,3 +424,39 @@ const categoryLabels: Record<string, string> = {
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const codeBlocks = document.querySelectorAll('.extended-content pre');
+
+    codeBlocks.forEach((block) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.textContent = 'Copy';
+      button.setAttribute('aria-label', 'Copy code to clipboard');
+
+      button.addEventListener('click', async () => {
+        const code = block.querySelector('code');
+        const text = code ? code.textContent : block.textContent;
+
+        try {
+          await navigator.clipboard.writeText(text || '');
+          button.textContent = 'Copied!';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            button.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      });
+
+      block.appendChild(button);
+    });
+  });
+</script>

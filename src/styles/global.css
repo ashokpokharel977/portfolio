@@ -15,6 +15,11 @@
   --shadow: rgba(0, 0, 0, 0.05);
   --shadow-lg: rgba(0, 0, 0, 0.1);
 
+  /* Code Block - always dark for better readability */
+  --code-bg: #1e1e2e;
+  --code-border: #313244;
+  --code-text: #cdd6f4;
+
   /* Glow Effects */
   --glow-sm: 0 0 10px var(--accent-glow);
   --glow-md: 0 0 20px var(--accent-glow);
@@ -63,6 +68,11 @@
   --border: #262626;
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-lg: rgba(0, 0, 0, 0.5);
+
+  /* Code Block - same dark theme for consistency */
+  --code-bg: #1e1e2e;
+  --code-border: #313244;
+  --code-text: #cdd6f4;
 }
 
 /* Reset & Base */
