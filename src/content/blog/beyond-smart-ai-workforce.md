@@ -18,6 +18,7 @@ Why? Because we are no longer just scaling intelligence. We are scaling **agency
 To build systems that do real work without breaking the real world, we need a new mental model—one that moves beyond "how smart is it?" to "how much freedom does it have?"
 
 Here is a approach to align your engineering reality with your executive strategy, using three analogies that map the AI landscape to the human workforce.
+
 ---
 ## The Approach
 
