@@ -283,6 +283,57 @@ code {
   animation: pulseGlow 2s ease-in-out infinite;
 }
 
+/* Prose Tables — shared across blog, case studies, and any markdown content */
+.prose table,
+.post-content table,
+.extended-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.prose thead,
+.post-content thead,
+.extended-content thead {
+  border-bottom: 2px solid var(--border);
+}
+
+.prose th,
+.post-content th,
+.extended-content th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.prose td,
+.post-content td,
+.extended-content td {
+  padding: 0.5rem 0.75rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+
+.prose tr:last-child td,
+.post-content tr:last-child td,
+.extended-content tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 600px) {
+  .prose table,
+  .post-content table,
+  .extended-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* Selection */
 ::selection {
   background: var(--accent);
