@@ -15,7 +15,7 @@ outcomes:
   - { metric: "80%", description: "Reduction in deployment failures" }
   - { metric: "60%", description: "Decrease in incident response time" }
   - { metric: "30%", description: "Cost savings through optimization" }
-technologies: ["AWS", "Serverless", "Terraform", "DataDog", "GitHub Actions", "Python"]
+technologies: ["AWS", "Serverless", "Terraform", "DataDog", "GitHub Actions", "Python", "SRE", "FinOps"]
 heroImage: "/images/case-studies/devops-platform.svg"
 category: "devops-transformation"
 pubDate: 2023-10-01

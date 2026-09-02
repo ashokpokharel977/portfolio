@@ -15,7 +15,7 @@ outcomes:
   - { metric: "95%", description: "Accuracy in document classification" }
   - { metric: "24hrs→2hrs", description: "Processing time per batch" }
   - { metric: "3x", description: "Throughput increase" }
-technologies: ["Python", "LangChain", "OpenAI", "AWS", "PostgreSQL", "FastAPI"]
+technologies: ["Python", "LangChain", "OpenAI", "AWS", "PostgreSQL", "FastAPI", "GenAI", "RAG"]
 heroImage: "/images/case-studies/ai-automation.svg"
 category: "ai-automation"
 pubDate: 2024-01-15

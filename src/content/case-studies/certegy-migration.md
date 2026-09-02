@@ -15,7 +15,7 @@ outcomes:
   - { metric: "99.99%", description: "Uptime achieved post-migration" }
   - { metric: "200+", description: "Applications migrated successfully" }
   - { metric: "0", description: "Unplanned downtime during migration" }
-technologies: ["AWS", "Terraform", "Java", "C", "Networking", "Oracle"]
+technologies: ["AWS", "Terraform", "Java", "C", "Networking", "Oracle", "Cloud", "FinOps", "SRE"]
 heroImage: "/images/case-studies/cloud-migration.svg"
 category: "cloud-migration"
 pubDate: 2024-06-15
