@@ -19,7 +19,7 @@ outcomes:
   - { metric: "~120", description: "AWS resources provisioned and configured from a single AWS CDK deploy command" }
   - { metric: "Zero", description: "Context loss on escalation — the human agent inherits the full transcript, tool calls, and AI findings" }
 technologies: ["Amazon Connect", "Amazon Bedrock", "Bedrock AgentCore", "Amazon Lex", "Amazon Q", "Claude", "MCP", "GenAI", "AWS CDK", "Aurora Serverless", "PostgreSQL"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/icaas-agentic-contact-center.webp"
 category: "ai-automation"
 pubDate: 2025-10-01
 featured: true

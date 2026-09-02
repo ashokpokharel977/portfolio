@@ -19,7 +19,7 @@ outcomes:
   - { metric: "99.9%", description: "Faster policy violation detection — 72 hours to under 5 minutes" }
   - { metric: "46%", description: "Reduction in total cost of ownership" }
 technologies: ["AWS Control Tower", "Terraform", "AWS Security Hub", "AWS Config", "FinOps", "SRE", "SCPs", "Account Factory for Terraform", "IAM Identity Center", "CloudTrail"]
-heroImage: "/images/case-studies/security.svg"
+heroImage: "/images/case-studies/cloud-governance-multi-account.webp"
 category: "security"
 pubDate: 2025-02-18
 featured: true

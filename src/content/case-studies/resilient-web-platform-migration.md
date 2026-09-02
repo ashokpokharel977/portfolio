@@ -18,7 +18,7 @@ outcomes:
   - { metric: "~15 min", description: "Deployments, down from 2-3 hours via automated CI/CD" }
   - { metric: "RTO 6h / RPO 1h", description: "Recovery objectives validated against AWS-defined standards" }
 technologies: ["AWS Elastic Beanstalk", "RDS", "AWS Resilience Hub", "CI/CD", "SRE", "CloudWatch", "Route 53", "EFS", "CodePipeline", "Terraform", "WordPress"]
-heroImage: "/images/case-studies/cloud-migration.svg"
+heroImage: "/images/case-studies/resilient-web-platform-migration.webp"
 category: "cloud-migration"
 pubDate: 2025-08-20
 featured: false

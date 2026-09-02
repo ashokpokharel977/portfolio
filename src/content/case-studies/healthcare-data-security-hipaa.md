@@ -18,7 +18,7 @@ outcomes:
   - { metric: "-60%", description: "Fewer manual compliance checks" }
   - { metric: "-40%", description: "Faster incident response time" }
 technologies: ["AWS IAM", "AWS KMS", "AWS Security Hub", "SIEM", "HIPAA", "Security", "Compliance", "Cloud"]
-heroImage: "/images/case-studies/security.svg"
+heroImage: "/images/case-studies/healthcare-data-security-hipaa.webp"
 category: "security"
 pubDate: 2025-09-04
 featured: true

@@ -18,7 +18,7 @@ outcomes:
   - { metric: "5x", description: "Customer scale supported within the first month of launch" }
   - { metric: "99.9%", description: "Platform uptime on auto-scaled endpoints and managed EKS" }
 technologies: ["Amazon Bedrock", "Nova Reel", "GenAI", "AWS Step Functions", "AWS Lambda", "ECS Fargate", "Amazon EKS", "Amazon SageMaker", "Responsible AI", "Amazon S3", "Amazon RDS", "CloudFront"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/genai-video-generation-platform.webp"
 category: "ai-automation"
 pubDate: 2026-02-13
 featured: true

@@ -16,7 +16,7 @@ outcomes:
   - { metric: "24hrs→2hrs", description: "Processing time per batch" }
   - { metric: "3x", description: "Throughput increase" }
 technologies: ["Python", "LangChain", "OpenAI", "AWS", "PostgreSQL", "FastAPI", "GenAI", "RAG"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/ai-document-processing.webp"
 category: "ai-automation"
 pubDate: 2024-01-15
 featured: true

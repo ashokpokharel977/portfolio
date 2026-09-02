@@ -18,7 +18,7 @@ outcomes:
   - { metric: "Horizontal", description: "Auto-scaling replaces reactive vertical instance bumps under load" }
   - { metric: "Zero-downtime", description: "Deploys via immutable AMIs rolled through Auto Scaling, with centralized observability" }
 technologies: ["EC2 Auto Scaling", "AWS", "Packer", "Spot Instances", "Savings Plans", "FinOps", "CloudWatch", "AWS KMS", "RabbitMQ", "Celery"]
-heroImage: "/images/case-studies/devops-platform.svg"
+heroImage: "/images/case-studies/sms-platform-autoscaling-cost.webp"
 category: "devops-transformation"
 pubDate: 2024-11-01
 featured: false

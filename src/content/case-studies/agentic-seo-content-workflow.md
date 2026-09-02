@@ -16,7 +16,7 @@ outcomes:
   - { metric: "Better structure", description: "Enhanced content structure and internal linking for SEO" }
   - { metric: "Higher SERP", description: "Improved search rankings and click-through rates" }
 technologies: ["GenAI", "Agentic AI", "LLM", "NLP", "Automation", "RAG"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/agentic-seo-content-workflow.webp"
 category: "ai-automation"
 pubDate: 2025-02-20
 featured: false

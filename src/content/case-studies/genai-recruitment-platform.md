@@ -18,7 +18,7 @@ outcomes:
   - { metric: "40%", description: "Fewer manual early-stage interviews, freeing recruiter time" }
   - { metric: "~43%", description: "Lower estimated annual TCO versus the on-premises workflow" }
 technologies: ["GenAI", "Amazon Bedrock", "AWS Nova Sonic", "AWS", "RAG", "Python"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/genai-recruitment-platform.webp"
 category: "ai-automation"
 pubDate: 2026-02-05
 featured: false

@@ -19,7 +19,7 @@ outcomes:
   - { metric: "Ingestion", description: "More reliable, scalable ingestion and processing with lower data latency" }
   - { metric: "Resilience", description: "Self-healing error recovery cut down on manual firefighting during failures" }
 technologies: ["GenAI", "AWS Glue", "Amazon Kinesis", "LLM", "Data Engineering", "AWS Lambda", "Embeddings"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/genai-etl-pipeline-enhancer.webp"
 category: "ai-automation"
 pubDate: 2025-01-20
 featured: false

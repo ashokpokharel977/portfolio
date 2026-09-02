@@ -18,7 +18,7 @@ outcomes:
   - { metric: "80%", description: "Reduction in Mean Time to Detect for incidents" }
   - { metric: "40%", description: "Cloud cost reduction through right-sizing and automation" }
 technologies: ["AWS", "Security", "CloudOps", "SRE", "Security Hub", "Config", "GuardDuty", "WAF", "Control Tower", "IAM Identity Center", "EKS", "Terraform", "CloudWatch"]
-heroImage: "/images/case-studies/security.svg"
+heroImage: "/images/case-studies/govcloud-agritech-platform.webp"
 category: "security"
 pubDate: 2026-02-18
 featured: false

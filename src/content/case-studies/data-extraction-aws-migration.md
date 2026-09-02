@@ -18,7 +18,7 @@ outcomes:
   - { metric: "40%", description: "Lower mean time to recovery (MTTR)" }
   - { metric: "30%", description: "More concurrent scraping jobs without service degradation" }
 technologies: ["AWS", "Terraform", "GitHub Actions", "RDS", "Packer", "Ansible", "CloudWatch", "Security Hub", "FinOps", "DevSecOps", "SRE"]
-heroImage: "/images/case-studies/cloud-migration.svg"
+heroImage: "/images/case-studies/data-extraction-aws-migration.webp"
 category: "cloud-migration"
 pubDate: 2024-03-27
 featured: false

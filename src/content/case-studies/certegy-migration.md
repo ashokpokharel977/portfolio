@@ -16,7 +16,7 @@ outcomes:
   - { metric: "200+", description: "Applications migrated successfully" }
   - { metric: "0", description: "Unplanned downtime during migration" }
 technologies: ["AWS", "Terraform", "Java", "C", "Networking", "Oracle", "Cloud", "FinOps", "SRE"]
-heroImage: "/images/case-studies/cloud-migration.svg"
+heroImage: "/images/case-studies/certegy-migration.webp"
 category: "cloud-migration"
 pubDate: 2024-06-15
 featured: true

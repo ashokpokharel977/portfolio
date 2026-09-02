@@ -20,7 +20,7 @@ outcomes:
   - { metric: "GitOps", description: "Every change flows through Git + Argo CD on one multi-tenant EKS cluster serving 3 isolated environments" }
   - { metric: "100%", description: "Shadow AI eliminated with zero compliance violations across the rollout" }
 technologies: ["Amazon EKS", "Kubernetes", "Cilium", "Argo CD", "GitOps", "Terraform", "SRE", "Grafana", "Amazon Bedrock", "RAG", "GenAI", "AI Governance", "Responsible AI", "Security", "Compliance", "cert-manager", "External Secrets", "Aurora", "pgvector", "Temporal"]
-heroImage: "/images/case-studies/devops-platform.svg"
+heroImage: "/images/case-studies/lasius-ai-platform.webp"
 category: "devops-transformation"
 pubDate: 2026-08-11
 featured: true

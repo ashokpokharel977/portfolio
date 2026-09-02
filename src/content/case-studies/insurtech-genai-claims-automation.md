@@ -18,7 +18,7 @@ outcomes:
   - { metric: "Sub-second", description: "Real-time fraud probability scoring at claim submission" }
   - { metric: "30/70", description: "Canary split for safe blue/green model deployment with automated rollback" }
 technologies: ["AWS", "ECS Fargate", "Amazon Bedrock", "Amazon SageMaker", "Amazon Textract", "Amazon Comprehend", "AWS Lambda", "Amazon RDS (PostgreSQL)", "GenAI", "Prompt Engineering", "MLOps"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/insurtech-genai-claims-automation.webp"
 category: "ai-automation"
 pubDate: 2026-02-13
 featured: false

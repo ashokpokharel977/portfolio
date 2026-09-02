@@ -19,7 +19,7 @@ outcomes:
   - { metric: "91%", description: "Ticket classification accuracy from NLP intent extraction" }
   - { metric: "94%", description: "Knowledge-base match rate in the top-3 hybrid RAG results" }
 technologies: ["GenAI", "LangGraph", "LlamaIndex", "RAG", "Claude", "PostgreSQL", "pgvector", "MLOps", "Inngest", "OpenTelemetry", "Next.js"]
-heroImage: "/images/case-studies/devops-platform.svg"
+heroImage: "/images/case-studies/lasius-ai-helpdesk-automation.webp"
 category: "devops-transformation"
 pubDate: 2026-01-15
 featured: false

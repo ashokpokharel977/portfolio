@@ -18,7 +18,7 @@ outcomes:
   - { metric: "Responsible AI", description: "Safety guardrails and privacy compliance built into every AI interaction with health data" }
   - { metric: "Scalable foundation", description: "Well-Architected, IaC-provisioned environment supports thousands of users with dynamic plan adjustments" }
 technologies: ["AWS", "Terraform", "CI/CD", "GenAI", "Well-Architected", "Amazon Bedrock", "ECS Fargate", "RAG", "LLaMA 3", "PostgreSQL"]
-heroImage: "/images/case-studies/cloud-migration.svg"
+heroImage: "/images/case-studies/ai-fitness-wellness-platform.webp"
 category: "cloud-migration"
 pubDate: 2026-02-11
 featured: false

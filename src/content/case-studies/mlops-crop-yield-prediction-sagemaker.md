@@ -18,7 +18,7 @@ outcomes:
   - { metric: "Continuous monitoring", description: "CloudWatch and Step Functions surface evaluation metrics to keep models honest over time" }
   - { metric: "Serverless economics", description: "Pay-per-use, event-driven architecture that scales to zero between pipeline runs" }
 technologies: ["Amazon SageMaker", "MLOps", "AWS Step Functions", "AWS Lambda", "Amazon S3", "AWS Glue", "CloudWatch", "Python", "Serverless"]
-heroImage: "/images/case-studies/ai-automation.svg"
+heroImage: "/images/case-studies/mlops-crop-yield-prediction-sagemaker.webp"
 category: "ai-automation"
 pubDate: 2025-07-17
 featured: false

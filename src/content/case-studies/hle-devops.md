@@ -16,7 +16,7 @@ outcomes:
   - { metric: "60%", description: "Decrease in incident response time" }
   - { metric: "30%", description: "Cost savings through optimization" }
 technologies: ["AWS", "Serverless", "Terraform", "DataDog", "GitHub Actions", "Python", "SRE", "FinOps"]
-heroImage: "/images/case-studies/devops-platform.svg"
+heroImage: "/images/case-studies/hle-devops.webp"
 category: "devops-transformation"
 pubDate: 2023-10-01
 featured: true

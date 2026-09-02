@@ -18,7 +18,7 @@ outcomes:
   - { metric: "-45%", description: "Reduction in mean time to recover (MTTR)" }
   - { metric: "200ms → 40ms", description: "Content delivery latency improvement" }
 technologies: ["Amazon EKS", "Kubernetes", "Terraform", "GitHub Actions", "CloudWatch", "AWS X-Ray", "Velero", "Amazon RDS", "SRE", "FinOps"]
-heroImage: "/images/case-studies/devops-platform.svg"
+heroImage: "/images/case-studies/code-gen-platform-eks-microservices.webp"
 category: "devops-transformation"
 pubDate: 2025-04-04
 featured: true
