@@ -3,6 +3,7 @@ title: "Serving LLMs Isn't Serving Web Apps: A Production Kubernetes Playbook"
 description: "How AI infrastructure evolved from raw GPUs to vLLM, LLM-D, and AI gateways — and how a self-hosted model actually wires into K Gateway on production Kubernetes."
 pubDate: 2026-09-10
 category: "ai"
+heroImage: "/images/blog/serving-llms-in-production-kubernetes/hero.jpg"
 tags: ["kubernetes", "ai", "llm", "vllm", "gpu", "inference"]
 draft: false
 ---
