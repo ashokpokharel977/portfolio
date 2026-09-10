@@ -7,13 +7,112 @@ tags: ["kubernetes", "ai", "llm", "vllm", "gpu", "inference"]
 draft: false
 ---
 
-*Everything the tutorials skip about running large language models in production.*
+*Tutorials stop at `vllm serve`. This is everything after it — GPU memory limits, KV cache, batching, fleet routing, and wiring a self-hosted model into a Kubernetes gateway.*
 
 Serving a web app is easy. A request comes in, you do a few milliseconds of work, you send a response back, you forget it ever happened. Stateless, cheap, and every server in the fleet is interchangeable.
 
 Serving an LLM breaks every one of those assumptions. A single request can run for a few hundred *laps* of a generation loop. No two requests are the same size — one is "capital of France," the next is "summarize this 100-page contract." The work you did for a user is stranded on the one GPU that did it. And the hardware underneath is the most expensive thing you own.
 
 I've been building and deploying this stuff, so here's the map: how we got from a PyTorch script to production inference fleets, and — the part most write-ups skip — how a model *you host yourself* wires into the gateway that fronts everything.
+
+Here's the whole system on one page. Every box gets built up over the rest of the post — but this is where we're headed: a request enters at the gateway and comes back out as streamed tokens.
+
+<figure class="llm-arch">
+<style>
+.llm-arch{margin:2.25rem 0;font-family:inherit}
+.llm-arch__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:14px;background:var(--bg-secondary);padding:8px}
+.llm-arch svg{display:block;width:100%;min-width:700px;height:auto}
+.llm-arch text{font-family:inherit;fill:var(--text-primary)}
+.llm-arch .t-title{font-weight:700;font-size:15px}
+.llm-arch .t-sub{fill:var(--text-secondary);font-size:11.5px}
+.llm-arch .t-lbl{fill:var(--text-muted);font-size:11px}
+.llm-arch .t-code{fill:var(--text-secondary);font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.llm-arch .pill{font-size:10.5px;font-weight:600}
+.llm-arch .ic{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.llm-arch .box{stroke-width:1.6}
+.llm-arch .n-client{fill:var(--bg-secondary);stroke:#64748b}
+.llm-arch .n-gate{fill:color-mix(in srgb,#0d9488 10%,var(--bg-secondary));stroke:#0d9488}
+.llm-arch .n-sched{fill:color-mix(in srgb,#d97706 10%,var(--bg-secondary));stroke:#d97706}
+.llm-arch .n-pre{fill:color-mix(in srgb,#4f46e5 10%,var(--bg-secondary));stroke:#4f46e5}
+.llm-arch .n-dec{fill:color-mix(in srgb,#db2777 10%,var(--bg-secondary));stroke:#db2777}
+.llm-arch .n-ext{fill:color-mix(in srgb,#64748b 8%,var(--bg-secondary));stroke:#64748b}
+.llm-arch .pb-gate{fill:color-mix(in srgb,#0d9488 15%,var(--bg-secondary));stroke:#0d9488;stroke-width:1}
+.llm-arch .pb-sched{fill:color-mix(in srgb,#d97706 15%,var(--bg-secondary));stroke:#d97706;stroke-width:1}
+.llm-arch .flow{stroke-dasharray:5 7;animation:llm-dash 1.1s linear infinite}
+@keyframes llm-dash{to{stroke-dashoffset:-24}}
+.llm-arch figcaption{margin-top:.9rem;font-size:.85rem;color:var(--text-muted);text-align:center;line-height:1.6}
+.llm-arch .lg{display:inline-flex;align-items:center;gap:.35rem;margin:0 .55rem;white-space:nowrap}
+.llm-arch .lg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+@media (prefers-reduced-motion:reduce){.llm-arch .flow{animation:none}}
+</style>
+<div class="llm-arch__scroll">
+<svg viewBox="0 0 760 900" role="img" aria-label="End-to-end request path for a self-hosted LLM on Kubernetes: client to K Gateway to LLM-D scheduler to vLLM prefill and decode pools, with an external provider as an alternate backend.">
+<defs>
+<marker id="aS" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#64748b"/></marker>
+<marker id="aA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#d97706"/></marker>
+<marker id="aI" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#4f46e5"/></marker>
+<marker id="aR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#db2777"/></marker>
+</defs>
+<rect x="24" y="150" width="560" height="698" rx="18" fill="none" stroke="#64748b" stroke-width="1.4" stroke-dasharray="7 6" opacity="0.65"/>
+<text class="t-lbl" x="40" y="177" style="font-weight:600;letter-spacing:.3px">Kubernetes cluster</text>
+<rect x="88" y="522" width="436" height="212" rx="14" fill="none" stroke="#64748b" stroke-width="1.3" stroke-dasharray="6 6" opacity="0.6"/>
+<text class="t-lbl" x="104" y="543" style="font-weight:600">LeaderWorkerSet: scaled &amp; healed as one unit</text>
+<path class="flow" d="M305 88 V196" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aS)"/>
+<path class="flow" d="M305 306 V368" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aS)"/>
+<path d="M546 250 H602" fill="none" stroke="#64748b" stroke-width="1.7" stroke-dasharray="5 5" marker-end="url(#aS)"/>
+<path d="M305 478 V518" fill="none" stroke="#d97706" stroke-width="2"/>
+<path d="M305 518 H200 V552" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#aA)"/>
+<path d="M305 518 H412 V552" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#aA)"/>
+<path d="M292 631 H318" fill="none" stroke="#4f46e5" stroke-width="2" marker-end="url(#aI)"/>
+<path d="M412 708 V882" fill="none" stroke="#db2777" stroke-width="2" marker-end="url(#aR)"/>
+<text class="t-code" x="318" y="146">POST /ai/vllm/chat/completions</text>
+<text class="t-code" x="314" y="344">/ai/vllm</text>
+<text class="t-code" x="556" y="243">/ai/gemini</text>
+<text class="t-code" x="422" y="800">response streamed back to client</text>
+<rect class="box n-client" x="205" y="24" width="200" height="62" rx="12"/>
+<g class="ic" stroke="#64748b" stroke-width="1.7" transform="translate(219,32)"><circle cx="12" cy="9" r="3.4" fill="#64748b" stroke="none"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></g>
+<text class="t-title" x="250" y="49">Client / Agent</text>
+<text class="t-sub" x="250" y="67">app, agent, or SDK</text>
+<rect class="box n-gate" x="64" y="204" width="482" height="100" rx="12"/>
+<g class="ic" stroke="#0d9488" stroke-width="1.7" transform="translate(80,222)"><path d="M12 2.5 19 5.3V11c0 4.6-3.1 7.9-7 9.4C8.1 18.9 5 15.6 5 11V5.3Z"/><path d="M8.8 11.4l2.1 2.1 4.3-4.3"/></g>
+<text class="t-title" x="112" y="234">K Gateway + Agent Gateway</text>
+<text class="t-sub" x="112" y="253">Envoy data plane, :443, terminates TLS</text>
+<g><rect class="pb-gate" x="112" y="270" width="76" height="20" rx="10"/><text class="pill" x="150" y="284" fill="#0d9488" text-anchor="middle">HTTPRoute</text></g>
+<g><rect class="pb-gate" x="196" y="270" width="82" height="20" rx="10"/><text class="pill" x="237" y="284" fill="#0d9488" text-anchor="middle">URLRewrite</text></g>
+<g><rect class="pb-gate" x="286" y="270" width="52" height="20" rx="10"/><text class="pill" x="312" y="284" fill="#0d9488" text-anchor="middle">RBAC</text></g>
+<g><rect class="pb-gate" x="346" y="270" width="104" height="20" rx="10"/><text class="pill" x="398" y="284" fill="#0d9488" text-anchor="middle">token rate-limit</text></g>
+<rect class="box n-sched" x="104" y="372" width="402" height="104" rx="12"/>
+<g class="ic" stroke="#d97706" stroke-width="1.7" transform="translate(120,392)"><path d="M12 3.5 20.5 12 12 20.5 3.5 12Z"/><circle cx="12" cy="12" r="1.7" fill="#d97706" stroke="none"/><path d="M12 3.5V7M12 17v3.5M3.5 12H7M17 12h3.5" stroke-width="1.3"/></g>
+<text class="t-title" x="154" y="404">LLM-D Scheduler / Router</text>
+<text class="t-sub" x="154" y="423">smart router in front of the GPU fleet</text>
+<g><rect class="pb-sched" x="154" y="440" width="88" height="20" rx="10"/><text class="pill" x="198" y="454" fill="#d97706" text-anchor="middle">cache-aware</text></g>
+<g><rect class="pb-sched" x="250" y="440" width="84" height="20" rx="10"/><text class="pill" x="292" y="454" fill="#d97706" text-anchor="middle">load-aware</text></g>
+<g><rect class="pb-sched" x="342" y="440" width="140" height="20" rx="10"/><text class="pill" x="412" y="454" fill="#d97706" text-anchor="middle">prefill / decode split</text></g>
+<rect class="box n-pre" x="110" y="556" width="180" height="150" rx="12"/>
+<g class="ic" stroke="#4f46e5" stroke-width="1.6" transform="translate(124,568)"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="0.8"/><path d="M9 6.5V4.2M12 6.5V4.2M15 6.5V4.2M9 17.5v2.3M12 17.5v2.3M15 17.5v2.3M6.5 9H4.2M6.5 12H4.2M6.5 15H4.2M17.5 9h2.3M17.5 12h2.3M17.5 15h2.3" stroke-width="1.2"/></g>
+<text class="t-title" x="124" y="612" style="font-size:14px">vLLM Prefill</text>
+<text class="t-sub" x="124" y="632">compute-bound</text>
+<text class="t-sub" x="124" y="650">Nvidia H100</text>
+<text class="t-sub" x="124" y="668">builds KV cache</text>
+<rect class="box n-dec" x="322" y="556" width="180" height="150" rx="12"/>
+<g class="ic" stroke="#db2777" stroke-width="1.6" transform="translate(336,568)"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="0.8"/><path d="M9 6.5V4.2M12 6.5V4.2M15 6.5V4.2M9 17.5v2.3M12 17.5v2.3M15 17.5v2.3M6.5 9H4.2M6.5 12H4.2M6.5 15H4.2M17.5 9h2.3M17.5 12h2.3M17.5 15h2.3" stroke-width="1.2"/></g>
+<text class="t-title" x="336" y="612" style="font-size:14px">vLLM Decode</text>
+<text class="t-sub" x="336" y="632">memory-bound</text>
+<text class="t-sub" x="336" y="650">Nvidia H200</text>
+<text class="t-sub" x="336" y="668">streams tokens</text>
+<text class="t-sub" x="336" y="686">PagedAttention</text>
+<rect x="286" y="596" width="42" height="18" rx="9" fill="var(--bg-secondary)" stroke="#4f46e5" stroke-width="1"/>
+<text class="t-lbl" x="307" y="608" text-anchor="middle" style="font-weight:700;fill:#4f46e5;font-size:10px">KV</text>
+<rect class="box n-ext" x="606" y="196" width="146" height="104" rx="12" stroke-dasharray="6 5"/>
+<g class="ic" stroke="#64748b" stroke-width="1.6" transform="translate(668,204)"><path d="M7 17.5h9.3a3.4 3.4 0 0 0 .3-6.8A4.9 4.9 0 0 0 7.2 9.6 3.7 3.7 0 0 0 7 17.5Z"/></g>
+<text class="t-title" x="679" y="235" text-anchor="middle" style="font-size:13px">External provider</text>
+<text class="t-sub" x="679" y="252" text-anchor="middle" style="font-size:10px">OpenAI, Gemini, Bedrock</text>
+<text class="t-lbl" x="679" y="268" text-anchor="middle">API key via Secret</text>
+<text class="t-lbl" x="679" y="285" text-anchor="middle" style="font-style:italic">outside the cluster</text>
+</svg>
+</div>
+<figcaption><span class="lg"><i style="background:#0d9488"></i>Gateway</span><span class="lg"><i style="background:#d97706"></i>LLM-D router</span><span class="lg"><i style="background:#4f46e5"></i>Prefill (compute)</span><span class="lg"><i style="background:#db2777"></i>Decode (memory)</span><br>A self-hosted model is just another AI backend behind the same front door as any commercial API.</figcaption>
+</figure>
 
 ## Part 1: How We Got Here
 
@@ -173,102 +272,7 @@ The `URLRewrite` on the self-hosted rule strips `/ai/vllm` so the request that r
 
 ### The full path, end to end
 
-<figure class="llm-arch">
-<style>
-.llm-arch{margin:2.25rem 0;font-family:inherit}
-.llm-arch__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:14px;background:var(--bg-secondary);padding:8px}
-.llm-arch svg{display:block;width:100%;min-width:700px;height:auto}
-.llm-arch text{font-family:inherit;fill:var(--text-primary)}
-.llm-arch .t-title{font-weight:700;font-size:15px}
-.llm-arch .t-sub{fill:var(--text-secondary);font-size:11.5px}
-.llm-arch .t-lbl{fill:var(--text-muted);font-size:11px}
-.llm-arch .t-code{fill:var(--text-secondary);font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.llm-arch .pill{font-size:10.5px;font-weight:600}
-.llm-arch .ic{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.llm-arch .box{stroke-width:1.6}
-.llm-arch .n-client{fill:var(--bg-secondary);stroke:#64748b}
-.llm-arch .n-gate{fill:color-mix(in srgb,#0d9488 10%,var(--bg-secondary));stroke:#0d9488}
-.llm-arch .n-sched{fill:color-mix(in srgb,#d97706 10%,var(--bg-secondary));stroke:#d97706}
-.llm-arch .n-pre{fill:color-mix(in srgb,#4f46e5 10%,var(--bg-secondary));stroke:#4f46e5}
-.llm-arch .n-dec{fill:color-mix(in srgb,#db2777 10%,var(--bg-secondary));stroke:#db2777}
-.llm-arch .n-ext{fill:color-mix(in srgb,#64748b 8%,var(--bg-secondary));stroke:#64748b}
-.llm-arch .pb-gate{fill:color-mix(in srgb,#0d9488 15%,var(--bg-secondary));stroke:#0d9488;stroke-width:1}
-.llm-arch .pb-sched{fill:color-mix(in srgb,#d97706 15%,var(--bg-secondary));stroke:#d97706;stroke-width:1}
-.llm-arch .flow{stroke-dasharray:5 7;animation:llm-dash 1.1s linear infinite}
-@keyframes llm-dash{to{stroke-dashoffset:-24}}
-.llm-arch figcaption{margin-top:.9rem;font-size:.85rem;color:var(--text-muted);text-align:center;line-height:1.6}
-.llm-arch .lg{display:inline-flex;align-items:center;gap:.35rem;margin:0 .55rem;white-space:nowrap}
-.llm-arch .lg i{width:11px;height:11px;border-radius:3px;display:inline-block}
-@media (prefers-reduced-motion:reduce){.llm-arch .flow{animation:none}}
-</style>
-<div class="llm-arch__scroll">
-<svg viewBox="0 0 760 900" role="img" aria-label="End-to-end request path for a self-hosted LLM on Kubernetes: client to K Gateway to LLM-D scheduler to vLLM prefill and decode pools, with an external provider as an alternate backend.">
-<defs>
-<marker id="aS" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#64748b"/></marker>
-<marker id="aA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#d97706"/></marker>
-<marker id="aI" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#4f46e5"/></marker>
-<marker id="aR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0.5 8 4.5 0 8.5Z" fill="#db2777"/></marker>
-</defs>
-<rect x="24" y="150" width="560" height="698" rx="18" fill="none" stroke="#64748b" stroke-width="1.4" stroke-dasharray="7 6" opacity="0.65"/>
-<text class="t-lbl" x="40" y="177" style="font-weight:600;letter-spacing:.3px">Kubernetes cluster</text>
-<rect x="88" y="522" width="436" height="212" rx="14" fill="none" stroke="#64748b" stroke-width="1.3" stroke-dasharray="6 6" opacity="0.6"/>
-<text class="t-lbl" x="104" y="543" style="font-weight:600">LeaderWorkerSet: scaled &amp; healed as one unit</text>
-<path class="flow" d="M305 88 V196" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aS)"/>
-<path class="flow" d="M305 306 V368" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aS)"/>
-<path d="M546 250 H602" fill="none" stroke="#64748b" stroke-width="1.7" stroke-dasharray="5 5" marker-end="url(#aS)"/>
-<path d="M305 478 V518" fill="none" stroke="#d97706" stroke-width="2"/>
-<path d="M305 518 H200 V552" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#aA)"/>
-<path d="M305 518 H412 V552" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#aA)"/>
-<path d="M292 631 H318" fill="none" stroke="#4f46e5" stroke-width="2" marker-end="url(#aI)"/>
-<path d="M412 708 V882" fill="none" stroke="#db2777" stroke-width="2" marker-end="url(#aR)"/>
-<text class="t-code" x="318" y="146">POST /ai/vllm/chat/completions</text>
-<text class="t-code" x="314" y="344">/ai/vllm</text>
-<text class="t-code" x="556" y="243">/ai/gemini</text>
-<text class="t-code" x="422" y="800">response streamed back to client</text>
-<rect class="box n-client" x="205" y="24" width="200" height="62" rx="12"/>
-<g class="ic" stroke="#64748b" stroke-width="1.7" transform="translate(219,32)"><circle cx="12" cy="9" r="3.4" fill="#64748b" stroke="none"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></g>
-<text class="t-title" x="250" y="49">Client / Agent</text>
-<text class="t-sub" x="250" y="67">app, agent, or SDK</text>
-<rect class="box n-gate" x="64" y="204" width="482" height="100" rx="12"/>
-<g class="ic" stroke="#0d9488" stroke-width="1.7" transform="translate(80,222)"><path d="M12 2.5 19 5.3V11c0 4.6-3.1 7.9-7 9.4C8.1 18.9 5 15.6 5 11V5.3Z"/><path d="M8.8 11.4l2.1 2.1 4.3-4.3"/></g>
-<text class="t-title" x="112" y="234">K Gateway + Agent Gateway</text>
-<text class="t-sub" x="112" y="253">Envoy data plane, :443, terminates TLS</text>
-<g><rect class="pb-gate" x="112" y="270" width="76" height="20" rx="10"/><text class="pill" x="150" y="284" fill="#0d9488" text-anchor="middle">HTTPRoute</text></g>
-<g><rect class="pb-gate" x="196" y="270" width="82" height="20" rx="10"/><text class="pill" x="237" y="284" fill="#0d9488" text-anchor="middle">URLRewrite</text></g>
-<g><rect class="pb-gate" x="286" y="270" width="52" height="20" rx="10"/><text class="pill" x="312" y="284" fill="#0d9488" text-anchor="middle">RBAC</text></g>
-<g><rect class="pb-gate" x="346" y="270" width="104" height="20" rx="10"/><text class="pill" x="398" y="284" fill="#0d9488" text-anchor="middle">token rate-limit</text></g>
-<rect class="box n-sched" x="104" y="372" width="402" height="104" rx="12"/>
-<g class="ic" stroke="#d97706" stroke-width="1.7" transform="translate(120,392)"><path d="M12 3.5 20.5 12 12 20.5 3.5 12Z"/><circle cx="12" cy="12" r="1.7" fill="#d97706" stroke="none"/><path d="M12 3.5V7M12 17v3.5M3.5 12H7M17 12h3.5" stroke-width="1.3"/></g>
-<text class="t-title" x="154" y="404">LLM-D Scheduler / Router</text>
-<text class="t-sub" x="154" y="423">smart router in front of the GPU fleet</text>
-<g><rect class="pb-sched" x="154" y="440" width="88" height="20" rx="10"/><text class="pill" x="198" y="454" fill="#d97706" text-anchor="middle">cache-aware</text></g>
-<g><rect class="pb-sched" x="250" y="440" width="84" height="20" rx="10"/><text class="pill" x="292" y="454" fill="#d97706" text-anchor="middle">load-aware</text></g>
-<g><rect class="pb-sched" x="342" y="440" width="140" height="20" rx="10"/><text class="pill" x="412" y="454" fill="#d97706" text-anchor="middle">prefill / decode split</text></g>
-<rect class="box n-pre" x="110" y="556" width="180" height="150" rx="12"/>
-<g class="ic" stroke="#4f46e5" stroke-width="1.6" transform="translate(124,568)"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="0.8"/><path d="M9 6.5V4.2M12 6.5V4.2M15 6.5V4.2M9 17.5v2.3M12 17.5v2.3M15 17.5v2.3M6.5 9H4.2M6.5 12H4.2M6.5 15H4.2M17.5 9h2.3M17.5 12h2.3M17.5 15h2.3" stroke-width="1.2"/></g>
-<text class="t-title" x="124" y="612" style="font-size:14px">vLLM Prefill</text>
-<text class="t-sub" x="124" y="632">compute-bound</text>
-<text class="t-sub" x="124" y="650">Nvidia H100</text>
-<text class="t-sub" x="124" y="668">builds KV cache</text>
-<rect class="box n-dec" x="322" y="556" width="180" height="150" rx="12"/>
-<g class="ic" stroke="#db2777" stroke-width="1.6" transform="translate(336,568)"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="0.8"/><path d="M9 6.5V4.2M12 6.5V4.2M15 6.5V4.2M9 17.5v2.3M12 17.5v2.3M15 17.5v2.3M6.5 9H4.2M6.5 12H4.2M6.5 15H4.2M17.5 9h2.3M17.5 12h2.3M17.5 15h2.3" stroke-width="1.2"/></g>
-<text class="t-title" x="336" y="612" style="font-size:14px">vLLM Decode</text>
-<text class="t-sub" x="336" y="632">memory-bound</text>
-<text class="t-sub" x="336" y="650">Nvidia H200</text>
-<text class="t-sub" x="336" y="668">streams tokens</text>
-<text class="t-sub" x="336" y="686">PagedAttention</text>
-<rect x="286" y="596" width="42" height="18" rx="9" fill="var(--bg-secondary)" stroke="#4f46e5" stroke-width="1"/>
-<text class="t-lbl" x="307" y="608" text-anchor="middle" style="font-weight:700;fill:#4f46e5;font-size:10px">KV</text>
-<rect class="box n-ext" x="606" y="196" width="146" height="104" rx="12" stroke-dasharray="6 5"/>
-<g class="ic" stroke="#64748b" stroke-width="1.6" transform="translate(668,204)"><path d="M7 17.5h9.3a3.4 3.4 0 0 0 .3-6.8A4.9 4.9 0 0 0 7.2 9.6 3.7 3.7 0 0 0 7 17.5Z"/></g>
-<text class="t-title" x="679" y="235" text-anchor="middle" style="font-size:13px">External provider</text>
-<text class="t-sub" x="679" y="252" text-anchor="middle" style="font-size:10px">OpenAI, Gemini, Bedrock</text>
-<text class="t-lbl" x="679" y="268" text-anchor="middle">API key via Secret</text>
-<text class="t-lbl" x="679" y="285" text-anchor="middle" style="font-style:italic">outside the cluster</text>
-</svg>
-</div>
-<figcaption><span class="lg"><i style="background:#0d9488"></i>Gateway</span><span class="lg"><i style="background:#d97706"></i>LLM-D router</span><span class="lg"><i style="background:#4f46e5"></i>Prefill (compute)</span><span class="lg"><i style="background:#db2777"></i>Decode (memory)</span><br>A self-hosted model is just another AI backend behind the same front door as any commercial API.</figcaption>
-</figure>
+Trace the diagram at the top of this post from the client down. A request hits the gateway on `/ai/vllm`; the `HTTPRoute` matches it, rewrites the path to `/v1`, and hands it to the LLM-D scheduler. The scheduler routes by cache and load to a vLLM **prefill** pod, which builds the KV cache and passes it to a **decode** pod. The decode pod streams tokens back out through the gateway to the client. Swap `/ai/vllm` for `/ai/gemini` and the same route exits to an external provider instead.
 
 So a self-hosted model isn't a special case. It sits behind the same front door as any commercial API — same route, same policies, same observability — just pointed at a `Service` on your own GPUs instead of the public internet.
 
