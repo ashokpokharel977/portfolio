@@ -28,43 +28,40 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 ---
 
 <article class="blog-card card">
-  <a href={`/blog/${slug}`} class="card-link">
-    {heroImage && (
-      <div class="card-image-container">
-        <img src={heroImage} alt={title} class="card-image" loading="lazy" />
+  {heroImage && (
+    <div class="card-image-container">
+      <img src={heroImage} alt={title} class="card-image" loading="lazy" />
+    </div>
+  )}
+  <div class="card-content">
+    <div class="card-meta">
+      <a href={`/blog/category/${category}`} class="category-badge">
+        {categoryLabels[category] || category}
+      </a>
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    </div>
+    <h3 class="card-title">
+      <a href={`/blog/${slug}`} class="card-link">{title}</a>
+    </h3>
+    <p class="card-description">{description}</p>
+    {tags.length > 0 && (
+      <div class="card-tags">
+        {tags.slice(0, 3).map(tag => (
+          <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="tag">
+            {tag}
+          </a>
+        ))}
+        {tags.length > 3 && (
+          <span class="tag-more">+{tags.length - 3}</span>
+        )}
       </div>
     )}
-    <div class="card-content">
-      <div class="card-meta">
-        <a href={`/blog/category/${category}`} class="category-badge" onclick="event.stopPropagation()">
-          {categoryLabels[category] || category}
-        </a>
-        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-      </div>
-      <h3 class="card-title">{title}</h3>
-      <p class="card-description">{description}</p>
-      {tags.length > 0 && (
-        <div class="card-tags">
-          {tags.slice(0, 3).map(tag => (
-            <a
-              href={`/blog/tag/${encodeURIComponent(tag)}`}
-              class="tag"
-              onclick="event.stopPropagation()"
-            >
-              {tag}
-            </a>
-          ))}
-          {tags.length > 3 && (
-            <span class="tag-more">+{tags.length - 3}</span>
-          )}
-        </div>
-      )}
-    </div>
-  </a>
+  </div>
 </article>
 
 <style>
   .blog-card {
+    position: relative;
     padding: 0;
     overflow: hidden;
     transition: all var(--transition-base);
@@ -75,14 +72,24 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
     box-shadow: var(--glow-md);
   }
 
+  /* Title link stretches over the whole card so the entire card is clickable */
   .card-link {
-    display: block;
     color: inherit;
     text-decoration: none;
   }
 
-  .card-link:hover {
-    color: inherit;
+  .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Category badge and tags stay clickable above the stretched link */
+  .card-meta,
+  .card-tags {
+    position: relative;
+    z-index: 1;
   }
 
   .card-image-container {
